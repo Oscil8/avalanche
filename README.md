@@ -26,7 +26,11 @@ Two endpoints are available :
 * `/health` - healthcheck endpoint
 
 ## build and run go binary
+### Do Go setup before this
 ```bash
-go get github.com/open-fresh/avalanche/cmd/...
-avalanche --help
+mkdir -p $GOROOT/github.com/open-fresh
+cd $GOROOT/github.com/open-fresh
+git clone https://github.com/mnottheone/avalanche.git
+go install github.com/open-fresh/avalanche/cmd/...
+cmd --help
 ```
