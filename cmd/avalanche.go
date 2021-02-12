@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
+	"net/http"
 	"strconv"
 	"sync"
 	"time"
 
 	"github.com/open-fresh/avalanche/metrics"
 	"github.com/open-fresh/avalanche/pkg/download"
+        "github.com/prometheus/client_golang/prometheus/promhttp"	
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
@@ -31,8 +33,21 @@ var (
 	remoteRequestCount  = kingpin.Flag("remote-requests-count", "how many requests to send in total to the remote_write API.").Default("100").Int()
 	remoteReqsInterval  = kingpin.Flag("remote-write-interval", "delay between each remote write request.").Default("100ms").Duration()
 	remoteTenant        = kingpin.Flag("remote-tenant", "Tenant ID to include in remote_write send").Default("0").String()
+
 )
 
+func Serve() {
+	go func() {
+		http.Handle("/metrics", promhttp.Handler())
+        	http.ListenAndServe(":2112", nil)
+	}()
+}
+
+func Query() {
+	go func() {
+		metrics.Query("adhoc",100)
+	}()
+}
 func main() {
 	kingpin.Version("0.3")
 	log.SetFlags(log.Ltime | log.Lshortfile) // Show file name and line in logs.
@@ -45,6 +60,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// Start Prometheus Exposing metrics
+	Serve()
+        // Start Query thread
+	Query()
 
 	if *remoteURL != nil {
 		if (**remoteURL).Host == "" || (**remoteURL).Scheme == "" {
@@ -111,9 +131,12 @@ func main() {
 		return
 	}
 
+	
 	fmt.Printf("Serving ur metrics at localhost:%v/metrics\n", *port)
 	err = metrics.ServeMetrics(*port)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
+
+
