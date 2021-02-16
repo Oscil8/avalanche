@@ -22,8 +22,9 @@ docker run quay.io/freshtracks.io/avalanche --help
 ## Endpoints
 
 Two endpoints are available :
-* `/metrics` - metrics endpoint
-* `/health` - healthcheck endpoint
+* `port/metrics` - metrics endpoint
+* `2112/metrics - stats endpoint
+* `port/health` - healthcheck endpoint
 
 ## build and run go binary
 ### Do Go setup before this
@@ -33,4 +34,8 @@ cd $GOROOT/github.com/open-fresh
 git clone https://github.com/mnottheone/avalanche.git
 go install github.com/open-fresh/avalanche/cmd/...
 cmd --help
+
+## Example 
+cmd --remote-url=http://host:port/api/v1/remote_write --remote-read-url=http://host:port/api/v1/query --metric-count=10 --label-count=1 --series-count=100 --value-interval=10 --series-interval=360000 --metric-interval=360000 --remote-requests-count=100000 --remote-write-interval=1000ms --const-label=instance=local --remote-read-batch-size=50 --remote-read-requests-count=500 --remote-read-interval=10s
+
 ```
