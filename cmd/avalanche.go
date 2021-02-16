@@ -27,11 +27,15 @@ var (
 	metricInterval      = kingpin.Flag("metric-interval", "Change __name__ label values every {interval} seconds.").Default("120").Int()
 	port                = kingpin.Flag("port", "Port to serve at").Default("9001").Int()
 	remoteURL           = kingpin.Flag("remote-url", "URL to send samples via remote_write API.").URL()
+	remoteReadURL           = kingpin.Flag("remote-read-url", "URL to read samples via remote_write API.").URL()
 	remotePprofURLs     = kingpin.Flag("remote-pprof-urls", "a list of urls to download pprofs during the remote write: --remote-pprof-urls=http://127.0.0.1:10902/debug/pprof/heap --remote-pprof-urls=http://127.0.0.1:10902/debug/pprof/profile").URLList()
 	remotePprofInterval = kingpin.Flag("remote-pprof-interval", "how often to download pprof profiles.When not provided it will download a profile once before the end of the test.").Duration()
 	remoteBatchSize     = kingpin.Flag("remote-batch-size", "how many samples to send with each remote_write API request.").Default("2000").Int()
 	remoteRequestCount  = kingpin.Flag("remote-requests-count", "how many requests to send in total to the remote_write API.").Default("100").Int()
 	remoteReqsInterval  = kingpin.Flag("remote-write-interval", "delay between each remote write request.").Default("100ms").Duration()
+	remoteReadBatchSize     = kingpin.Flag("remote-read-batch-size", "how many queries to make with each remote_read API request batch.").Default("50").Int()
+	remoteReadRequestCount  = kingpin.Flag("remote-read-requests-count", "how many batch of read requests to make in total to the remote_query API.").Default("100").Int()
+	remoteReadReqsInterval  = kingpin.Flag("remote-read-interval", "delay between each batch of remote query requests.").Default("30s").Duration()
 	remoteTenant        = kingpin.Flag("remote-tenant", "Tenant ID to include in remote_write send").Default("0").String()
 
 )
@@ -39,15 +43,24 @@ var (
 func Serve() {
 	go func() {
 		http.Handle("/metrics", promhttp.Handler())
-        	http.ListenAndServe(":2112", nil)
+		http.ListenAndServe(":2112", nil)
 	}()
 }
 
 func Query() {
 	go func() {
-		metrics.Query("adhoc",100)
+			readConfig := metrics.ConfigRead{
+			URL:             **remoteReadURL,
+			RequestInterval: *remoteReadReqsInterval,
+			Size:            *remoteReadBatchSize,
+			RequestCount:    *remoteReadRequestCount,
+			Tenant:          *remoteTenant,
+			ConstLabels:	 *constLabels,
+	}
+		metrics.Query(readConfig)
 	}()
 }
+
 func main() {
 	kingpin.Version("0.3")
 	log.SetFlags(log.Ltime | log.Lshortfile) // Show file name and line in logs.
@@ -63,7 +76,8 @@ func main() {
 
 	// Start Prometheus Exposing metrics
 	Serve()
-        // Start Query thread
+	
+	// Start Query thread
 	Query()
 
 	if *remoteURL != nil {
