@@ -88,6 +88,9 @@ type series struct {
 	Value [2]interface{}
 }
 
+func init() {
+	prometheus.MustRegister(queryLatency)
+}
 
 // Make size queries after every RequestInterval RequestCount times.
 func Query(config ConfigRead) {
@@ -142,7 +145,7 @@ func runQueryBatch(config ConfigRead, c ReadClient) {
                         json.Unmarshal(bytes, &data)
                         expectedValue := strings.Split(group, ":")[0]
                         if data.Data != nil && len(data.Data.Result) > 0 && len(data.Data.Result[0].Value) > 0 {
-				fmt.Printf("%s gave %s, expected %s \n", q, data.Data.Result[0].Value[1], expectedValue)
+				//fmt.Printf("%s gave %s, expected %s \n", q, data.Data.Result[0].Value[1], expectedValue)
                                 if data.Data.Result[0].Value[1] == expectedValue {
 					queryAccuracy.WithLabelValues(group).Inc()
                                 }
