@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"math/rand"
@@ -11,33 +12,33 @@ import (
 
 	"github.com/open-fresh/avalanche/metrics"
 	"github.com/open-fresh/avalanche/pkg/download"
-        "github.com/prometheus/client_golang/prometheus/promhttp"	
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
 var (
-	metricCount         = kingpin.Flag("metric-count", "Number of metrics to serve.").Default("500").Int()
-	labelCount          = kingpin.Flag("label-count", "Number of labels per-metric.").Default("10").Int()
-	seriesCount         = kingpin.Flag("series-count", "Number of series per-metric.").Default("10").Int()
-	metricLength        = kingpin.Flag("metricname-length", "Modify length of metric names.").Default("5").Int()
-	labelLength         = kingpin.Flag("labelname-length", "Modify length of label names.").Default("5").Int()
-	constLabels         = kingpin.Flag("const-label", "Constant label to add to every metric. Format is labelName=labelValue. Flag can be specified multiple times.").Strings()
-	valueInterval       = kingpin.Flag("value-interval", "Change series values every {interval} seconds.").Default("30").Int()
-	labelInterval       = kingpin.Flag("series-interval", "Change series_id label values every {interval} seconds.").Default("60").Int()
-	metricInterval      = kingpin.Flag("metric-interval", "Change __name__ label values every {interval} seconds.").Default("120").Int()
-	port                = kingpin.Flag("port", "Port to serve at").Default("9001").Int()
-	remoteURL           = kingpin.Flag("remote-url", "URL to send samples via remote_write API.").URL()
-	remoteReadURL           = kingpin.Flag("remote-read-url", "URL to read samples via remote_write API.").URL()
-	remotePprofURLs     = kingpin.Flag("remote-pprof-urls", "a list of urls to download pprofs during the remote write: --remote-pprof-urls=http://127.0.0.1:10902/debug/pprof/heap --remote-pprof-urls=http://127.0.0.1:10902/debug/pprof/profile").URLList()
-	remotePprofInterval = kingpin.Flag("remote-pprof-interval", "how often to download pprof profiles.When not provided it will download a profile once before the end of the test.").Duration()
-	remoteBatchSize     = kingpin.Flag("remote-batch-size", "how many samples to send with each remote_write API request.").Default("2000").Int()
-	remoteRequestCount  = kingpin.Flag("remote-requests-count", "how many requests to send in total to the remote_write API.").Default("100").Int()
-	remoteReqsInterval  = kingpin.Flag("remote-write-interval", "delay between each remote write request.").Default("100ms").Duration()
-	remoteReadBatchSize     = kingpin.Flag("remote-read-batch-size", "how many queries to make with each remote_read API request batch.").Default("50").Int()
-	remoteReadRequestCount  = kingpin.Flag("remote-read-requests-count", "how many batch of read requests to make in total to the remote_query API.").Default("100").Int()
-	remoteReadReqsInterval  = kingpin.Flag("remote-read-interval", "delay between each batch of remote query requests.").Default("30s").Duration()
-	remoteTenant        = kingpin.Flag("remote-tenant", "Tenant ID to include in remote_write send").Default("0").String()
-
+	metricCount            = kingpin.Flag("metric-count", "Number of metrics to serve.").Default("500").Int()
+	labelCount             = kingpin.Flag("label-count", "Number of labels per-metric.").Default("10").Int()
+	seriesCount            = kingpin.Flag("series-count", "Number of series per-metric.").Default("10").Int()
+	metricLength           = kingpin.Flag("metricname-length", "Modify length of metric names.").Default("5").Int()
+	labelLength            = kingpin.Flag("labelname-length", "Modify length of label names.").Default("5").Int()
+	constLabels            = kingpin.Flag("const-label", "Constant label to add to every metric. Format is labelName=labelValue. Flag can be specified multiple times.").Strings()
+	valueInterval          = kingpin.Flag("value-interval", "Change series values every {interval} seconds.").Default("30").Int()
+	labelInterval          = kingpin.Flag("series-interval", "Change series_id label values every {interval} seconds.").Default("60").Int()
+	metricInterval         = kingpin.Flag("metric-interval", "Change __name__ label values every {interval} seconds.").Default("120").Int()
+	port                   = kingpin.Flag("port", "Port to serve at").Default("9001").Int()
+	remoteURL              = kingpin.Flag("remote-url", "URL to send samples via remote_write API.").URL()
+	remoteReadURL          = kingpin.Flag("remote-read-url", "URL to read samples via remote_write API.").URL()
+	remotePprofURLs        = kingpin.Flag("remote-pprof-urls", "a list of urls to download pprofs during the remote write: --remote-pprof-urls=http://127.0.0.1:10902/debug/pprof/heap --remote-pprof-urls=http://127.0.0.1:10902/debug/pprof/profile").URLList()
+	remotePprofInterval    = kingpin.Flag("remote-pprof-interval", "how often to download pprof profiles.When not provided it will download a profile once before the end of the test.").Duration()
+	remoteBatchSize        = kingpin.Flag("remote-batch-size", "how many samples to send with each remote_write API request.").Default("2000").Int()
+	remoteRequestCount     = kingpin.Flag("remote-requests-count", "how many requests to send in total to the remote_write API.").Default("100").Int()
+	remoteReqsInterval     = kingpin.Flag("remote-write-interval", "delay between each remote write request.").Default("100ms").Duration()
+	remoteReadBatchSize    = kingpin.Flag("remote-read-batch-size", "how many queries to make with each remote_read API request batch.").Default("50").Int()
+	remoteReadRequestCount = kingpin.Flag("remote-read-requests-count", "how many batch of read requests to make in total to the remote_query API.").Default("100").Int()
+	remoteReadReqsInterval = kingpin.Flag("remote-read-interval", "delay between each batch of remote query requests.").Default("30s").Duration()
+	remoteTenant           = kingpin.Flag("remote-tenant", "Tenant ID to include in remote_write send").Default("0").String()
+	pipelineProbeInterval  = kingpin.Flag("pipeline-probe-interval", "delay between succesive pipeline probes.").Default("10s").Duration()
 )
 
 func Serve() {
@@ -49,15 +50,33 @@ func Serve() {
 
 func Query() {
 	go func() {
-			readConfig := metrics.ConfigRead{
+		readConfig := metrics.ConfigRead{
 			URL:             **remoteReadURL,
 			RequestInterval: *remoteReadReqsInterval,
 			Size:            *remoteReadBatchSize,
 			RequestCount:    *remoteReadRequestCount,
 			Tenant:          *remoteTenant,
-			ConstLabels:	 *constLabels,
-	}
+			ConstLabels:     *constLabels,
+		}
 		metrics.Query(readConfig)
+	}()
+}
+
+func PipelineProbe() {
+	go func() {
+
+		timeout, _ := time.ParseDuration("30s")
+		pipelineProbeConfig := metrics.PipelineProbeConfig{
+			WriteUrl: **remoteURL,
+			ReadUrl:  **remoteReadURL,
+			Interval: *pipelineProbeInterval,
+			Timeout:  timeout,
+		}
+
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
+
+		metrics.PipelineProbe(ctx, pipelineProbeConfig)
 	}()
 }
 
@@ -76,9 +95,12 @@ func main() {
 
 	// Start Prometheus Exposing metrics
 	Serve()
-	
+
 	// Start Query thread
 	Query()
+
+	//Start Pipeline Probe thread
+	PipelineProbe()
 
 	if *remoteURL != nil {
 		if (**remoteURL).Host == "" || (**remoteURL).Scheme == "" {
@@ -145,12 +167,9 @@ func main() {
 		return
 	}
 
-	
 	fmt.Printf("Serving ur metrics at localhost:%v/metrics\n", *port)
 	err = metrics.ServeMetrics(*port)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
-
-
