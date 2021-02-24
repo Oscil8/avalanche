@@ -23,7 +23,7 @@ docker run quay.io/freshtracks.io/avalanche --help
 
 Two endpoints are available :
 * `port/metrics` - metrics endpoint
-* `2112/metrics - stats endpoint
+* `2112/stats` - stats endpoint
 * `port/health` - healthcheck endpoint
 
 ## build and run go binary
