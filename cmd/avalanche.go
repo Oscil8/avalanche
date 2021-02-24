@@ -42,12 +42,13 @@ var (
 
 func Serve() {
 	go func() {
-		http.Handle("/metrics", promhttp.Handler())
+		http.Handle("/stats", promhttp.Handler())
 		http.ListenAndServe(":2112", nil)
 	}()
 }
 
 func Query() {
+	maxCardinality := (*metricCount) * (*seriesCount)
 	go func() {
 			readConfig := metrics.ConfigRead{
 			URL:             **remoteReadURL,
@@ -56,6 +57,7 @@ func Query() {
 			RequestCount:    *remoteReadRequestCount,
 			Tenant:          *remoteTenant,
 			ConstLabels:	 *constLabels,
+			MaxCardinality:  maxCardinality,
 	}
 		metrics.Query(readConfig)
 	}()
@@ -78,7 +80,9 @@ func main() {
 	Serve()
 	
 	// Start Query thread
-	Query()
+	if *remoteReadURL != nil {
+		Query()
+	}
 
 	if *remoteURL != nil {
 		if (**remoteURL).Host == "" || (**remoteURL).Scheme == "" {

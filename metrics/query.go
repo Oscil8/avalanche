@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
         "math"
+	"math/rand"
 	"net/http"
 	"net/url"
         "strings"
@@ -18,13 +19,13 @@ import (
 )
 
 // queries map with cardinality as key aa well as value should be cardinality
-var qmap  = map[int]string{10: "max_over_time(count(avg({series_id=~\"[0-9]{1,1}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C}) by(series_id))[T:S])", 100: "max_over_time(count(avg({series_id=~\"[0-9]{1,2}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C}) by(series_id))[T:S])", 1000: "max_over_time(count(avg({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C}) by(series_id))[T:S])", 10000: "max_over_time(count(avg({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._[0-9]{1,1}\",C}) by(series_id))[T:S])", 100000: "max_over_time(count(avg({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._[0-9]{1,2}\",C}) by(series_id))[T:S])", 500000: "max_over_time(count(avg({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._[0-9]{1,3}\",C}) by(series_id))[T:S])"}
+var qmap  = map[int]string{10: "max_over_time(count(avg({series_id=~\"[0-9]{1,1}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C}) by(series_id))[T:S])", 100: "max_over_time(count(avg({series_id=~\"[0-9]{1,2}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C}) by(series_id))[T:S])", 1000: "max_over_time(count(avg({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C}) by(series_id))[T:S])", 10000: "max_over_time(count(avg({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,1}\",C}) by(series_id))[T:S])", 100000: "max_over_time(count(avg({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,2}\",C}) by(series_id))[T:S])", 1000000: "max_over_time(count(avg({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,3}\",C}) by(series_id))[T:S])"}
 
 
 var (
 	tstep =  map[string]string{"2h": "10s", "24h": "1m", "7d":"10m", "30d":"10m"}
 	tdis = map[string]float64{"2h": 0.5, "24h": 0.35, "7d": 0.1, "30d": 0.05}
-	cdis = map[int]int{10: 200, 100: 200, 1000: 50, 10000: 10, 100000: 10, 500000: 5}
+	cdis = map[int]int{10: 200, 100: 200, 1000: 50, 10000: 10, 100000: 10, 1000000: 5}
 
 	queryTotal = promauto.NewCounterVec(
 		prometheus.CounterOpts{
@@ -67,6 +68,7 @@ type ConfigRead struct {
 	RequestCount int
 	Tenant       string
 	ConstLabels  []string
+	MaxCardinality int
 }
 
 // Client for the remote write requests.
@@ -129,7 +131,7 @@ func Query(config ConfigRead) {
 func runQueryBatch(config ConfigRead, c ReadClient) {
 
 	var wg sync.WaitGroup
-	queries := generateQueries(config.Size, config.ConstLabels)
+	queries := generateQueries(config.Size, config.ConstLabels, config.MaxCardinality)
 
         for q, group := range queries {
 
@@ -175,23 +177,31 @@ func do(query string, c ReadClient) []byte {
 }
 
 // Generate query map of given size with query is  key and value is cardinality:timeRange:step 
-func generateQueries(size int, labels []string) map[string]string {
+func generateQueries(size int, labels []string, maxCardinality int) map[string]string {
         log.Printf("Generating queries \n")
         timestep := tstep
         total := 0
         timestep = tstep
 
+	s := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(s)
 	list := make(map[string]string )
         for t, s := range timestep {
                 for k, v := range cdis {
+			if k > maxCardinality {
+				continue
+			}
                         q := qmap[k]
                         q = strings.Replace(q, "T", t, 1)
                         q = strings.Replace(q, "S", s, 1)
 			q = strings.Replace(q, "C", strings.Join(labels, ","), 1)
                         num := int(math.Max(1.0 , (float64)(v*size/475) * tdis[t]))
+			//fmt.Printf("\n\n%d:%s:%s", k, t, s)
                         for i := 0; i < num; i++ {
-                                query := strings.Replace(q, "I", strconv.Itoa(i), 1)
+				ind := r.Intn(num)
+                                query := strings.Replace(q, "I", strconv.Itoa(ind), 1)
 				list[query] =  fmt.Sprintf("%d:%s:%s", k, t, s)
+				//fmt.Println(query)
                         }
                         total += num
                 }
