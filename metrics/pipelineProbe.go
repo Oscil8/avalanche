@@ -250,7 +250,7 @@ func queryAndRecord(ctx context.Context, metric string, config PipelineProbeConf
 		lastSeenTimeStamp, _ := values[len(values)-1][0].(float64)
 		now := (float64(time.Now().UnixNano()) / float64(time.Millisecond)) / (1000.0)
 		latency = float64(now - lastSeenTimeStamp)
-		fmt.Printf("lastSeen %v, now %v, latency %v\n", lastSeenTimeStamp, now, latency)
+		// fmt.Printf("lastSeen %v, now %v, latency %v\n", lastSeenTimeStamp, now, latency)
 
 	}
 
