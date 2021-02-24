@@ -1,0 +1,91 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: avalanche-service
+  namespace: store-load-test
+  labels:
+    app: avalanche-app
+spec:    
+  selector:
+    app: avalanche-app
+  ports:
+    - protocol: TCP
+      port: 2112
+      targetPort: 2112
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: avalanche
+  namespace: store-load-test
+  labels:
+    app: avalanche-app
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: avalanche-app
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /stats
+        prometheus.io/port: "2112"     
+      labels:
+        app: avalanche-app
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - arm64
+      containers:
+      - name: avalanche-app
+        image: anirudh0397/avalanche
+        args:
+        - --metric-count=10
+        - --series-count=1000
+        - --port=9001 
+        - --series-interval=36000 
+        - --metric-interval=3600000 
+        - --value-interval=10 
+        - --remote-url=http://URL/api/v1/remote_write 
+        - --remote-requests-count=100000 
+        - --remote-write-interval=1000ms 
+        - --remote-read-url=http://URL/api/v1/query
+        - --const-label=instance=$(INSTANCE)         
+        - --remote-read-batch-size=100 
+        - --remote-read-requests-count=100 
+        - --remote-read-interval=10s
+        ports:
+        - containerPort: 9001
+        - containerPort: 2112
+        env: 
+          - name: INSTANCE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: store-load-test
+  name: ingress-avalanche
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: avalanche-service
+              servicePort: 2112
