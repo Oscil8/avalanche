@@ -28,7 +28,7 @@ var (
 	metricInterval         = kingpin.Flag("metric-interval", "Change __name__ label values every {interval} seconds.").Default("120").Int()
 	port                   = kingpin.Flag("port", "Port to serve at").Default("9001").Int()
 	remoteURL              = kingpin.Flag("remote-url", "URL to send samples via remote_write API.").URL()
-	remoteReadURL          = kingpin.Flag("remote-read-url", "URL to read samples via remote_write API.").URL()
+	remoteReadURL          = kingpin.Flag("remote-read-url", "URL to read samples via remote_read API.").URL()
 	remotePprofURLs        = kingpin.Flag("remote-pprof-urls", "a list of urls to download pprofs during the remote write: --remote-pprof-urls=http://127.0.0.1:10902/debug/pprof/heap --remote-pprof-urls=http://127.0.0.1:10902/debug/pprof/profile").URLList()
 	remotePprofInterval    = kingpin.Flag("remote-pprof-interval", "how often to download pprof profiles.When not provided it will download a profile once before the end of the test.").Duration()
 	remoteBatchSize        = kingpin.Flag("remote-batch-size", "how many samples to send with each remote_write API request.").Default("2000").Int()
@@ -82,6 +82,23 @@ func PipelineProbe() {
 	}()
 }
 
+func RecordingProbe() {
+	go func() {
+
+		timeout, _ := time.ParseDuration("30s")
+		recordRuleProbeConfig := metrics.RecordRuleProbeConfig{
+			ReadUrl:  **remoteReadURL,
+			Interval: *pipelineProbeInterval,
+			Timeout:  timeout,
+		}
+
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
+
+		metrics.RecordRuleProbe(ctx, recordRuleProbeConfig)
+	}()
+}
+
 func main() {
 	kingpin.Version("0.3")
 	log.SetFlags(log.Ltime | log.Lshortfile) // Show file name and line in logs.
@@ -102,6 +119,7 @@ func main() {
 	if *remoteReadURL != nil {
 		Query()
 		PipelineProbe()
+		RecordingProbe()
 	}
 
 	if *remoteURL != nil {

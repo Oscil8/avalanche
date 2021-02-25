@@ -50,9 +50,6 @@ type PipelineProbeSeries struct {
 var PipelineProbeMetrics []string = []string{"m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8", "m9", "m10"}
 
 var (
-	flgConfig string
-	flgPort   string
-
 	probeExecutionsTotal = promauto.NewCounterVec(
 		prometheus.CounterOpts{
 			Name: "prober_executions_total",
@@ -242,7 +239,7 @@ func queryAndRecord(ctx context.Context, metric string, config PipelineProbeConf
 
 	maxLatency := 300.0
 	var latency float64
-
+	latency = maxLatency
 	if (len(response.Data.Result) > 0) && len(response.Data.Result[0].Values) > 0 {
 
 		PipelineProbeSeries := response.Data.Result
@@ -267,6 +264,8 @@ func queryAndRecord(ctx context.Context, metric string, config PipelineProbeConf
 }
 
 func pipelineProbeDo(ctx context.Context, method string, url string, body io.Reader) ([]byte, error) {
+
+	// fmt.Printf("Hi!!!!\n")
 
 	req, err := http.NewRequestWithContext(ctx, method, url, body)
 	// fmt.Printf("Request: %v\n", url)
