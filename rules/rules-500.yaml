@@ -1,0 +1,1039 @@
+
+groups:
+
+- name: 100:2h:10s
+  rules:
+  - record: record:0
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._20",instance="local"}) by(series_id))[2h:10s])
+  - record: record:1
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._102",instance="local"}) by(series_id))[2h:10s])
+  - record: record:2
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._72",instance="local"}) by(series_id))[2h:10s])
+  - record: record:3
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._78",instance="local"}) by(series_id))[2h:10s])
+  - record: record:4
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._48",instance="local"}) by(series_id))[2h:10s])
+  - record: record:5
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._91",instance="local"}) by(series_id))[2h:10s])
+  - record: record:6
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._60",instance="local"}) by(series_id))[2h:10s])
+  - record: record:7
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._33",instance="local"}) by(series_id))[2h:10s])
+  - record: record:8
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._68",instance="local"}) by(series_id))[2h:10s])
+  - record: record:9
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._48",instance="local"}) by(series_id))[2h:10s])
+  - record: record:10
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._104",instance="local"}) by(series_id))[2h:10s])
+  - record: record:11
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._24",instance="local"}) by(series_id))[2h:10s])
+  - record: record:12
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._73",instance="local"}) by(series_id))[2h:10s])
+  - record: record:13
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._89",instance="local"}) by(series_id))[2h:10s])
+  - record: record:14
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._12",instance="local"}) by(series_id))[2h:10s])
+  - record: record:15
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._35",instance="local"}) by(series_id))[2h:10s])
+  - record: record:16
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._40",instance="local"}) by(series_id))[2h:10s])
+  - record: record:17
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._103",instance="local"}) by(series_id))[2h:10s])
+  - record: record:18
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._32",instance="local"}) by(series_id))[2h:10s])
+  - record: record:19
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._85",instance="local"}) by(series_id))[2h:10s])
+  - record: record:20
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._92",instance="local"}) by(series_id))[2h:10s])
+  - record: record:21
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._42",instance="local"}) by(series_id))[2h:10s])
+  - record: record:22
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._71",instance="local"}) by(series_id))[2h:10s])
+  - record: record:23
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._65",instance="local"}) by(series_id))[2h:10s])
+  - record: record:24
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[2h:10s])
+  - record: record:25
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._103",instance="local"}) by(series_id))[2h:10s])
+  - record: record:26
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._80",instance="local"}) by(series_id))[2h:10s])
+  - record: record:27
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._50",instance="local"}) by(series_id))[2h:10s])
+  - record: record:28
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._101",instance="local"}) by(series_id))[2h:10s])
+  - record: record:29
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[2h:10s])
+  - record: record:30
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._76",instance="local"}) by(series_id))[2h:10s])
+  - record: record:31
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._22",instance="local"}) by(series_id))[2h:10s])g
+  - record: record:32
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._88",instance="local"}) by(series_id))[2h:10s])
+  - record: record:33
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._18",instance="local"}) by(series_id))[2h:10s])
+  - record: record:34
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._33",instance="local"}) by(series_id))[2h:10s])
+  - record: record:35
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[2h:10s])
+  - record: record:36
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._54",instance="local"}) by(series_id))[2h:10s])
+  - record: record:37
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._96",instance="local"}) by(series_id))[2h:10s])
+  - record: record:38
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._50",instance="local"}) by(series_id))[2h:10s])
+  - record: record:39
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._86",instance="local"}) by(series_id))[2h:10s])
+  - record: record:40
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._55",instance="local"}) by(series_id))[2h:10s])
+  - record: record:41
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._86",instance="local"}) by(series_id))[2h:10s])
+  - record: record:42
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._41",instance="local"}) by(series_id))[2h:10s])
+  - record: record:43
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._55",instance="local"}) by(series_id))[2h:10s])
+  - record: record:44
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._15",instance="local"}) by(series_id))[2h:10s])
+  - record: record:45
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._51",instance="local"}) by(series_id))[2h:10s])
+  - record: record:46
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._25",instance="local"}) by(series_id))[2h:10s])
+  - record: record:47
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._69",instance="local"}) by(series_id))[2h:10s])
+  - record: record:48
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._83",instance="local"}) by(series_id))[2h:10s])
+  - record: record:49
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._25",instance="local"}) by(series_id))[2h:10s])
+  - record: record:50
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._80",instance="local"}) by(series_id))[2h:10s])
+  - record: record:51
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._6",instance="local"}) by(series_id))[2h:10s])
+  - record: record:52
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._36",instance="local"}) by(series_id))[2h:10s])
+  - record: record:53
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._25",instance="local"}) by(series_id))[2h:10s])
+  - record: record:54
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._39",instance="local"}) by(series_id))[2h:10s])
+  - record: record:55
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._64",instance="local"}) by(series_id))[2h:10s])
+  - record: record:56
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._68",instance="local"}) by(series_id))[2h:10s])
+  - record: record:57
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._51",instance="local"}) by(series_id))[2h:10s])
+  - record: record:58
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._101",instance="local"}) by(series_id))[2h:10s])
+  - record: record:59
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._27",instance="local"}) by(series_id))[2h:10s])
+  - record: record:60
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._72",instance="local"}) by(series_id))[2h:10s])
+  - record: record:61
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._85",instance="local"}) by(series_id))[2h:10s])
+  - record: record:62
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._89",instance="local"}) by(series_id))[2h:10s])
+  - record: record:63
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._29",instance="local"}) by(series_id))[2h:10s])
+  - record: record:64
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._99",instance="local"}) by(series_id))[2h:10s])
+  - record: record:65
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[2h:10s])
+  - record: record:66
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._49",instance="local"}) by(series_id))[2h:10s])
+  - record: record:67
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._6",instance="local"}) by(series_id))[2h:10s])
+  - record: record:68
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._73",instance="local"}) by(series_id))[2h:10s])
+  - record: record:69
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._3",instance="local"}) by(series_id))[2h:10s])
+  - record: record:70
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._89",instance="local"}) by(series_id))[2h:10s])
+  - record: record:71
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._73",instance="local"}) by(series_id))[2h:10s])
+  - record: record:72
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._21",instance="local"}) by(series_id))[2h:10s])
+  - record: record:73
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._101",instance="local"}) by(series_id))[2h:10s])
+  - record: record:74
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._92",instance="local"}) by(series_id))[2h:10s])
+  - record: record:75
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._49",instance="local"}) by(series_id))[2h:10s])
+  - record: record:76
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._70",instance="local"}) by(series_id))[2h:10s])
+  - record: record:77
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._25",instance="local"}) by(series_id))[2h:10s])
+  - record: record:78
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._27",instance="local"}) by(series_id))[2h:10s])
+  - record: record:79
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._10",instance="local"}) by(series_id))[2h:10s])
+  - record: record:80
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._97",instance="local"}) by(series_id))[2h:10s])
+  - record: record:81
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._33",instance="local"}) by(series_id))[2h:10s])
+  - record: record:82
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._36",instance="local"}) by(series_id))[2h:10s])
+  - record: record:83
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._48",instance="local"}) by(series_id))[2h:10s])
+  - record: record:84
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[2h:10s])
+  - record: record:85
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._66",instance="local"}) by(series_id))[2h:10s])
+  - record: record:86
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._61",instance="local"}) by(series_id))[2h:10s])
+  - record: record:87
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._64",instance="local"}) by(series_id))[2h:10s])
+  - record: record:88
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._15",instance="local"}) by(series_id))[2h:10s])
+  - record: record:89
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._71",instance="local"}) by(series_id))[2h:10s])
+  - record: record:90
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._87",instance="local"}) by(series_id))[2h:10s])
+  - record: record:91
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._32",instance="local"}) by(series_id))[2h:10s])
+  - record: record:92
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._73",instance="local"}) by(series_id))[2h:10s])
+  - record: record:93
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._103",instance="local"}) by(series_id))[2h:10s])
+  - record: record:94
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._87",instance="local"}) by(series_id))[2h:10s])
+  - record: record:95
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._53",instance="local"}) by(series_id))[2h:10s])
+  - record: record:96
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._30",instance="local"}) by(series_id))[2h:10s])
+  - record: record:97
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._94",instance="local"}) by(series_id))[2h:10s])
+  - record: record:98
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._25",instance="local"}) by(series_id))[2h:10s])
+  - record: record:99
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._84",instance="local"}) by(series_id))[2h:10s])
+  - record: record:100
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._43",instance="local"}) by(series_id))[2h:10s])
+  - record: record:101
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._93",instance="local"}) by(series_id))[2h:10s])
+  - record: record:102
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[2h:10s])
+  - record: record:103
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._89",instance="local"}) by(series_id))[2h:10s])
+  - record: record:104
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._22",instance="local"}) by(series_id))[2h:10s])
+- name: 1000:2h:10s
+  rules:
+  - record: record:105
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[2h:10s])
+  - record: record:106
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._24",instance="local"}) by(series_id))[2h:10s])
+  - record: record:107
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._11",instance="local"}) by(series_id))[2h:10s])
+  - record: record:108
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._14",instance="local"}) by(series_id))[2h:10s])
+  - record: record:109
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._5",instance="local"}) by(series_id))[2h:10s])
+  - record: record:110
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[2h:10s])
+  - record: record:111
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[2h:10s])
+  - record: record:112
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._22",instance="local"}) by(series_id))[2h:10s])
+  - record: record:113
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[2h:10s])
+  - record: record:114
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[2h:10s])
+  - record: record:115
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[2h:10s])
+  - record: record:116
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0",instance="local"}) by(series_id))[2h:10s])
+  - record: record:117
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._18",instance="local"}) by(series_id))[2h:10s])
+  - record: record:118
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._11",instance="local"}) by(series_id))[2h:10s])
+  - record: record:119
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0",instance="local"}) by(series_id))[2h:10s])
+  - record: record:120
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._20",instance="local"}) by(series_id))[2h:10s])
+  - record: record:121
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._21",instance="local"}) by(series_id))[2h:10s])
+  - record: record:122
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[2h:10s])
+  - record: record:123
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[2h:10s])
+  - record: record:124
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._10",instance="local"}) by(series_id))[2h:10s])
+  - record: record:125
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._20",instance="local"}) by(series_id))[2h:10s])
+  - record: record:126
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[2h:10s])
+  - record: record:127
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._16",instance="local"}) by(series_id))[2h:10s])
+  - record: record:128
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[2h:10s])
+  - record: record:129
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._21",instance="local"}) by(series_id))[2h:10s])
+  - record: record:130
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._24",instance="local"}) by(series_id))[2h:10s])
+- name: 10000:2h:10s
+  rules:
+  - record: record:131
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._4[0-9]{1,1}",instance="local"}) by(series_id))[2h:10s])
+  - record: record:132
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1[0-9]{1,1}",instance="local"}) by(series_id))[2h:10s])
+  - record: record:133
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1[0-9]{1,1}",instance="local"}) by(series_id))[2h:10s])
+  - record: record:134
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1[0-9]{1,1}",instance="local"}) by(series_id))[2h:10s])
+  - record: record:135
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._3[0-9]{1,1}",instance="local"}) by(series_id))[2h:10s])
+- name: 100000:2h:10s
+  rules:
+  - record: record:136
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._2[0-9]{1,2}",instance="local"}) by(series_id))[2h:10s])
+  - record: record:137
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._4[0-9]{1,2}",instance="local"}) by(series_id))[2h:10s])
+  - record: record:138
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1[0-9]{1,2}",instance="local"}) by(series_id))[2h:10s])
+  - record: record:139
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._4[0-9]{1,2}",instance="local"}) by(series_id))[2h:10s])
+  - record: record:140
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1[0-9]{1,2}",instance="local"}) by(series_id))[2h:10s])
+- name: 1000000:2h:10s
+  rules:
+  - record: record:141
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,3}",instance="local"}) by(series_id))[2h:10s])
+  - record: record:142
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,3}",instance="local"}) by(series_id))[2h:10s])
+- name: 10:2h:10s
+  rules:
+  - record: record:143
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._59",instance="local"}) by(series_id))[2h:10s])
+  - record: record:144
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[2h:10s])
+  - record: record:145
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._68",instance="local"}) by(series_id))[2h:10s])
+  - record: record:146
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._18",instance="local"}) by(series_id))[2h:10s])
+  - record: record:147
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._72",instance="local"}) by(series_id))[2h:10s])
+  - record: record:148
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._40",instance="local"}) by(series_id))[2h:10s])
+  - record: record:149
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._37",instance="local"}) by(series_id))[2h:10s])
+  - record: record:150
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._48",instance="local"}) by(series_id))[2h:10s])
+  - record: record:151
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._81",instance="local"}) by(series_id))[2h:10s])
+  - record: record:152
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._36",instance="local"}) by(series_id))[2h:10s])
+  - record: record:153
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._24",instance="local"}) by(series_id))[2h:10s])
+  - record: record:154
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._14",instance="local"}) by(series_id))[2h:10s])
+  - record: record:155
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._90",instance="local"}) by(series_id))[2h:10s])
+  - record: record:156
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._104",instance="local"}) by(series_id))[2h:10s])
+  - record: record:157
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._57",instance="local"}) by(series_id))[2h:10s])
+  - record: record:158
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._50",instance="local"}) by(series_id))[2h:10s])
+  - record: record:159
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._74",instance="local"}) by(series_id))[2h:10s])
+  - record: record:160
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._24",instance="local"}) by(series_id))[2h:10s])
+  - record: record:161
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._78",instance="local"}) by(series_id))[2h:10s])
+  - record: record:162
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._44",instance="local"}) by(series_id))[2h:10s])
+  - record: record:163
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._41",instance="local"}) by(series_id))[2h:10s])
+  - record: record:164
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._97",instance="local"}) by(series_id))[2h:10s])
+  - record: record:165
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._21",instance="local"}) by(series_id))[2h:10s])
+  - record: record:166
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._37",instance="local"}) by(series_id))[2h:10s])
+  - record: record:167
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._89",instance="local"}) by(series_id))[2h:10s])
+  - record: record:168
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._66",instance="local"}) by(series_id))[2h:10s])
+  - record: record:169
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._50",instance="local"}) by(series_id))[2h:10s])
+  - record: record:170
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._68",instance="local"}) by(series_id))[2h:10s])
+  - record: record:171
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._86",instance="local"}) by(series_id))[2h:10s])
+  - record: record:172
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._25",instance="local"}) by(series_id))[2h:10s])
+  - record: record:173
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._6",instance="local"}) by(series_id))[2h:10s])
+  - record: record:174
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._88",instance="local"}) by(series_id))[2h:10s])
+  - record: record:175
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._46",instance="local"}) by(series_id))[2h:10s])
+  - record: record:176
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._104",instance="local"}) by(series_id))[2h:10s])
+  - record: record:177
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._5",instance="local"}) by(series_id))[2h:10s])
+  - record: record:178
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._84",instance="local"}) by(series_id))[2h:10s])
+  - record: record:179
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._61",instance="local"}) by(series_id))[2h:10s])
+  - record: record:180
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._93",instance="local"}) by(series_id))[2h:10s])
+  - record: record:181
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._23",instance="local"}) by(series_id))[2h:10s])
+  - record: record:182
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._90",instance="local"}) by(series_id))[2h:10s])
+  - record: record:183
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._65",instance="local"}) by(series_id))[2h:10s])
+  - record: record:184
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._76",instance="local"}) by(series_id))[2h:10s])
+  - record: record:185
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._25",instance="local"}) by(series_id))[2h:10s])
+  - record: record:186
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._71",instance="local"}) by(series_id))[2h:10s])
+  - record: record:187
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._68",instance="local"}) by(series_id))[2h:10s])
+  - record: record:188
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._12",instance="local"}) by(series_id))[2h:10s])
+  - record: record:189
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._26",instance="local"}) by(series_id))[2h:10s])
+  - record: record:190
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._46",instance="local"}) by(series_id))[2h:10s])
+  - record: record:191
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._27",instance="local"}) by(series_id))[2h:10s])
+  - record: record:192
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._66",instance="local"}) by(series_id))[2h:10s])
+  - record: record:193
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._60",instance="local"}) by(series_id))[2h:10s])
+  - record: record:194
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._9",instance="local"}) by(series_id))[2h:10s])
+  - record: record:195
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[2h:10s])
+  - record: record:196
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[2h:10s])
+  - record: record:197
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[2h:10s])
+  - record: record:198
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._72",instance="local"}) by(series_id))[2h:10s])
+  - record: record:199
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._50",instance="local"}) by(series_id))[2h:10s])
+  - record: record:200
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._34",instance="local"}) by(series_id))[2h:10s])
+  - record: record:201
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._23",instance="local"}) by(series_id))[2h:10s])
+  - record: record:202
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._50",instance="local"}) by(series_id))[2h:10s])
+  - record: record:203
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._99",instance="local"}) by(series_id))[2h:10s])
+  - record: record:204
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._18",instance="local"}) by(series_id))[2h:10s])
+  - record: record:205
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._104",instance="local"}) by(series_id))[2h:10s])
+  - record: record:206
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._24",instance="local"}) by(series_id))[2h:10s])
+  - record: record:207
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._51",instance="local"}) by(series_id))[2h:10s])
+  - record: record:208
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._18",instance="local"}) by(series_id))[2h:10s])
+  - record: record:209
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._18",instance="local"}) by(series_id))[2h:10s])
+  - record: record:210
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._14",instance="local"}) by(series_id))[2h:10s])
+  - record: record:211
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._30",instance="local"}) by(series_id))[2h:10s])
+  - record: record:212
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._79",instance="local"}) by(series_id))[2h:10s])
+  - record: record:213
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._40",instance="local"}) by(series_id))[2h:10s])
+  - record: record:214
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._12",instance="local"}) by(series_id))[2h:10s])
+  - record: record:215
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._0",instance="local"}) by(series_id))[2h:10s])
+  - record: record:216
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._5",instance="local"}) by(series_id))[2h:10s])
+  - record: record:217
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._30",instance="local"}) by(series_id))[2h:10s])
+  - record: record:218
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._16",instance="local"}) by(series_id))[2h:10s])
+  - record: record:219
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._31",instance="local"}) by(series_id))[2h:10s])
+  - record: record:220
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._48",instance="local"}) by(series_id))[2h:10s])
+  - record: record:221
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._79",instance="local"}) by(series_id))[2h:10s])
+  - record: record:222
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._83",instance="local"}) by(series_id))[2h:10s])
+  - record: record:223
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._18",instance="local"}) by(series_id))[2h:10s])
+  - record: record:224
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._15",instance="local"}) by(series_id))[2h:10s])
+  - record: record:225
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._88",instance="local"}) by(series_id))[2h:10s])
+  - record: record:226
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._8",instance="local"}) by(series_id))[2h:10s])
+  - record: record:227
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[2h:10s])
+  - record: record:228
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._98",instance="local"}) by(series_id))[2h:10s])
+  - record: record:229
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._87",instance="local"}) by(series_id))[2h:10s])
+  - record: record:230
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._27",instance="local"}) by(series_id))[2h:10s])
+  - record: record:231
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._61",instance="local"}) by(series_id))[2h:10s])
+  - record: record:232
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._48",instance="local"}) by(series_id))[2h:10s])
+  - record: record:233
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._91",instance="local"}) by(series_id))[2h:10s])
+  - record: record:234
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._46",instance="local"}) by(series_id))[2h:10s])
+  - record: record:235
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._46",instance="local"}) by(series_id))[2h:10s])
+  - record: record:236
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._79",instance="local"}) by(series_id))[2h:10s])
+  - record: record:237
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[2h:10s])
+  - record: record:238
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._48",instance="local"}) by(series_id))[2h:10s])
+  - record: record:239
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._88",instance="local"}) by(series_id))[2h:10s])
+  - record: record:240
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._55",instance="local"}) by(series_id))[2h:10s])
+  - record: record:241
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._29",instance="local"}) by(series_id))[2h:10s])
+  - record: record:242
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._64",instance="local"}) by(series_id))[2h:10s])
+  - record: record:243
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._47",instance="local"}) by(series_id))[2h:10s])
+  - record: record:244
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._66",instance="local"}) by(series_id))[2h:10s])
+  - record: record:245
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._28",instance="local"}) by(series_id))[2h:10s])
+  - record: record:246
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[2h:10s])
+  - record: record:247
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._31",instance="local"}) by(series_id))[2h:10s])
+- name: 1000:24h:1m
+  rules:
+  - record: record:248
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._12",instance="local"}) by(series_id))[24h:1m])
+  - record: record:249
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._8",instance="local"}) by(series_id))[24h:1m])
+  - record: record:250
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._8",instance="local"}) by(series_id))[24h:1m])
+  - record: record:251
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._5",instance="local"}) by(series_id))[24h:1m])
+  - record: record:252
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._16",instance="local"}) by(series_id))[24h:1m])
+  - record: record:253
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._5",instance="local"}) by(series_id))[24h:1m])
+  - record: record:254
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._13",instance="local"}) by(series_id))[24h:1m])
+  - record: record:255
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[24h:1m])
+  - record: record:256
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._12",instance="local"}) by(series_id))[24h:1m])
+  - record: record:257
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._6",instance="local"}) by(series_id))[24h:1m])
+  - record: record:258
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._9",instance="local"}) by(series_id))[24h:1m])
+  - record: record:259
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[24h:1m])
+  - record: record:260
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[24h:1m])
+  - record: record:261
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[24h:1m])
+  - record: record:262
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[24h:1m])
+  - record: record:263
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._4",instance="local"}) by(series_id))[24h:1m])
+  - record: record:264
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[24h:1m])
+  - record: record:265
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._8",instance="local"}) by(series_id))[24h:1m])
+- name: 10000:24h:1m
+  rules:
+  - record: record:266
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._2[0-9]{1,1}",instance="local"}) by(series_id))[24h:1m])
+  - record: record:267
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1[0-9]{1,1}",instance="local"}) by(series_id))[24h:1m])
+  - record: record:268
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,1}",instance="local"}) by(series_id))[24h:1m])
+- name: 100000:24h:1m
+  rules:
+  - record: record:269
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,2}",instance="local"}) by(series_id))[24h:1m])
+  - record: record:270
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,2}",instance="local"}) by(series_id))[24h:1m])
+  - record: record:271
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,2}",instance="local"}) by(series_id))[24h:1m])
+- name: 1000000:24h:1m
+  rules:
+  - record: record:272
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,3}",instance="local"}) by(series_id))[24h:1m])
+- name: 10:24h:1m
+  rules:
+  - record: record:273
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._45",instance="local"}) by(series_id))[24h:1m])
+  - record: record:274
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[24h:1m])
+  - record: record:275
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._8",instance="local"}) by(series_id))[24h:1m])
+  - record: record:276
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._48",instance="local"}) by(series_id))[24h:1m])
+  - record: record:277
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._40",instance="local"}) by(series_id))[24h:1m])
+  - record: record:278
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._70",instance="local"}) by(series_id))[24h:1m])
+  - record: record:279
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._40",instance="local"}) by(series_id))[24h:1m])
+  - record: record:280
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._60",instance="local"}) by(series_id))[24h:1m])
+  - record: record:281
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._61",instance="local"}) by(series_id))[24h:1m])
+  - record: record:282
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[24h:1m])
+  - record: record:283
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._11",instance="local"}) by(series_id))[24h:1m])
+  - record: record:284
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[24h:1m])
+  - record: record:285
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._10",instance="local"}) by(series_id))[24h:1m])
+  - record: record:286
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[24h:1m])
+  - record: record:287
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._40",instance="local"}) by(series_id))[24h:1m])
+  - record: record:288
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._25",instance="local"}) by(series_id))[24h:1m])
+  - record: record:289
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._37",instance="local"}) by(series_id))[24h:1m])
+  - record: record:290
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._64",instance="local"}) by(series_id))[24h:1m])
+  - record: record:291
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._63",instance="local"}) by(series_id))[24h:1m])
+  - record: record:292
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._5",instance="local"}) by(series_id))[24h:1m])
+  - record: record:293
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._54",instance="local"}) by(series_id))[24h:1m])
+  - record: record:294
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._37",instance="local"}) by(series_id))[24h:1m])
+  - record: record:295
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._34",instance="local"}) by(series_id))[24h:1m])
+  - record: record:296
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._10",instance="local"}) by(series_id))[24h:1m])
+  - record: record:297
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._23",instance="local"}) by(series_id))[24h:1m])
+  - record: record:298
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._18",instance="local"}) by(series_id))[24h:1m])
+  - record: record:299
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._52",instance="local"}) by(series_id))[24h:1m])
+  - record: record:300
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._11",instance="local"}) by(series_id))[24h:1m])
+  - record: record:301
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._12",instance="local"}) by(series_id))[24h:1m])
+  - record: record:302
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._38",instance="local"}) by(series_id))[24h:1m])
+  - record: record:303
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._53",instance="local"}) by(series_id))[24h:1m])
+  - record: record:304
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._67",instance="local"}) by(series_id))[24h:1m])
+  - record: record:305
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._53",instance="local"}) by(series_id))[24h:1m])
+  - record: record:306
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._40",instance="local"}) by(series_id))[24h:1m])
+  - record: record:307
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._32",instance="local"}) by(series_id))[24h:1m])
+  - record: record:308
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._33",instance="local"}) by(series_id))[24h:1m])
+  - record: record:309
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[24h:1m])
+  - record: record:310
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._49",instance="local"}) by(series_id))[24h:1m])
+  - record: record:311
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._44",instance="local"}) by(series_id))[24h:1m])
+  - record: record:312
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._72",instance="local"}) by(series_id))[24h:1m])
+  - record: record:313
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._52",instance="local"}) by(series_id))[24h:1m])
+  - record: record:314
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[24h:1m])
+  - record: record:315
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[24h:1m])
+  - record: record:316
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._72",instance="local"}) by(series_id))[24h:1m])
+  - record: record:317
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._62",instance="local"}) by(series_id))[24h:1m])
+  - record: record:318
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._34",instance="local"}) by(series_id))[24h:1m])
+  - record: record:319
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._56",instance="local"}) by(series_id))[24h:1m])
+  - record: record:320
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._55",instance="local"}) by(series_id))[24h:1m])
+  - record: record:321
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._49",instance="local"}) by(series_id))[24h:1m])
+  - record: record:322
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._38",instance="local"}) by(series_id))[24h:1m])
+  - record: record:323
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._11",instance="local"}) by(series_id))[24h:1m])
+  - record: record:324
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._37",instance="local"}) by(series_id))[24h:1m])
+  - record: record:325
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._9",instance="local"}) by(series_id))[24h:1m])
+  - record: record:326
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._33",instance="local"}) by(series_id))[24h:1m])
+  - record: record:327
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[24h:1m])
+  - record: record:328
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._72",instance="local"}) by(series_id))[24h:1m])
+  - record: record:329
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[24h:1m])
+  - record: record:330
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._43",instance="local"}) by(series_id))[24h:1m])
+  - record: record:331
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._50",instance="local"}) by(series_id))[24h:1m])
+  - record: record:332
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._63",instance="local"}) by(series_id))[24h:1m])
+  - record: record:333
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._69",instance="local"}) by(series_id))[24h:1m])
+  - record: record:334
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._56",instance="local"}) by(series_id))[24h:1m])
+  - record: record:335
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._39",instance="local"}) by(series_id))[24h:1m])
+  - record: record:336
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._11",instance="local"}) by(series_id))[24h:1m])
+  - record: record:337
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._40",instance="local"}) by(series_id))[24h:1m])
+  - record: record:338
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._27",instance="local"}) by(series_id))[24h:1m])
+  - record: record:339
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._38",instance="local"}) by(series_id))[24h:1m])
+  - record: record:340
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._40",instance="local"}) by(series_id))[24h:1m])
+  - record: record:341
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._46",instance="local"}) by(series_id))[24h:1m])
+  - record: record:342
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._40",instance="local"}) by(series_id))[24h:1m])
+  - record: record:343
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._5",instance="local"}) by(series_id))[24h:1m])
+  - record: record:344
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._41",instance="local"}) by(series_id))[24h:1m])
+  - record: record:345
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._26",instance="local"}) by(series_id))[24h:1m])
+- name: 100:24h:1m
+  rules:
+  - record: record:346
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._36",instance="local"}) by(series_id))[24h:1m])
+  - record: record:347
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._12",instance="local"}) by(series_id))[24h:1m])
+  - record: record:348
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._30",instance="local"}) by(series_id))[24h:1m])
+  - record: record:349
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._26",instance="local"}) by(series_id))[24h:1m])
+  - record: record:350
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._4",instance="local"}) by(series_id))[24h:1m])
+  - record: record:351
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._55",instance="local"}) by(series_id))[24h:1m])
+  - record: record:352
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._25",instance="local"}) by(series_id))[24h:1m])
+  - record: record:353
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._69",instance="local"}) by(series_id))[24h:1m])
+  - record: record:354
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._42",instance="local"}) by(series_id))[24h:1m])
+  - record: record:355
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[24h:1m])
+  - record: record:356
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._14",instance="local"}) by(series_id))[24h:1m])
+  - record: record:357
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._49",instance="local"}) by(series_id))[24h:1m])
+  - record: record:358
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._46",instance="local"}) by(series_id))[24h:1m])
+  - record: record:359
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._11",instance="local"}) by(series_id))[24h:1m])
+  - record: record:360
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._41",instance="local"}) by(series_id))[24h:1m])
+  - record: record:361
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._61",instance="local"}) by(series_id))[24h:1m])
+  - record: record:362
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._46",instance="local"}) by(series_id))[24h:1m])
+  - record: record:363
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._58",instance="local"}) by(series_id))[24h:1m])
+  - record: record:364
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._32",instance="local"}) by(series_id))[24h:1m])
+  - record: record:365
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._4",instance="local"}) by(series_id))[24h:1m])
+  - record: record:366
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._61",instance="local"}) by(series_id))[24h:1m])
+  - record: record:367
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[24h:1m])
+  - record: record:368
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._42",instance="local"}) by(series_id))[24h:1m])
+  - record: record:369
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._48",instance="local"}) by(series_id))[24h:1m])
+  - record: record:370
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._69",instance="local"}) by(series_id))[24h:1m])
+  - record: record:371
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[24h:1m])
+  - record: record:372
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._40",instance="local"}) by(series_id))[24h:1m])
+  - record: record:373
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._68",instance="local"}) by(series_id))[24h:1m])
+  - record: record:374
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._54",instance="local"}) by(series_id))[24h:1m])
+  - record: record:375
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._63",instance="local"}) by(series_id))[24h:1m])
+  - record: record:376
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[24h:1m])
+  - record: record:377
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._12",instance="local"}) by(series_id))[24h:1m])
+  - record: record:378
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._54",instance="local"}) by(series_id))[24h:1m])
+  - record: record:379
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[24h:1m])
+  - record: record:380
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._67",instance="local"}) by(series_id))[24h:1m])
+  - record: record:381
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._22",instance="local"}) by(series_id))[24h:1m])
+  - record: record:382
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._61",instance="local"}) by(series_id))[24h:1m])
+  - record: record:383
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._36",instance="local"}) by(series_id))[24h:1m])
+  - record: record:384
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._8",instance="local"}) by(series_id))[24h:1m])
+  - record: record:385
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._29",instance="local"}) by(series_id))[24h:1m])
+  - record: record:386
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._26",instance="local"}) by(series_id))[24h:1m])
+  - record: record:387
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._14",instance="local"}) by(series_id))[24h:1m])
+  - record: record:388
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._10",instance="local"}) by(series_id))[24h:1m])
+  - record: record:389
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._29",instance="local"}) by(series_id))[24h:1m])
+  - record: record:390
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[24h:1m])
+  - record: record:391
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._22",instance="local"}) by(series_id))[24h:1m])
+  - record: record:392
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[24h:1m])
+  - record: record:393
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._32",instance="local"}) by(series_id))[24h:1m])
+  - record: record:394
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._28",instance="local"}) by(series_id))[24h:1m])
+  - record: record:395
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._31",instance="local"}) by(series_id))[24h:1m])
+  - record: record:396
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._20",instance="local"}) by(series_id))[24h:1m])
+  - record: record:397
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._55",instance="local"}) by(series_id))[24h:1m])
+  - record: record:398
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._9",instance="local"}) by(series_id))[24h:1m])
+  - record: record:399
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._68",instance="local"}) by(series_id))[24h:1m])
+  - record: record:400
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._30",instance="local"}) by(series_id))[24h:1m])
+  - record: record:401
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._34",instance="local"}) by(series_id))[24h:1m])
+  - record: record:402
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._45",instance="local"}) by(series_id))[24h:1m])
+  - record: record:403
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._66",instance="local"}) by(series_id))[24h:1m])
+  - record: record:404
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._12",instance="local"}) by(series_id))[24h:1m])
+  - record: record:405
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._56",instance="local"}) by(series_id))[24h:1m])
+  - record: record:406
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._10",instance="local"}) by(series_id))[24h:1m])
+  - record: record:407
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._67",instance="local"}) by(series_id))[24h:1m])
+  - record: record:408
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._34",instance="local"}) by(series_id))[24h:1m])
+  - record: record:409
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._55",instance="local"}) by(series_id))[24h:1m])
+  - record: record:410
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._22",instance="local"}) by(series_id))[24h:1m])
+  - record: record:411
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._33",instance="local"}) by(series_id))[24h:1m])
+  - record: record:412
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._41",instance="local"}) by(series_id))[24h:1m])
+  - record: record:413
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._20",instance="local"}) by(series_id))[24h:1m])
+  - record: record:414
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._64",instance="local"}) by(series_id))[24h:1m])
+  - record: record:415
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._42",instance="local"}) by(series_id))[24h:1m])
+  - record: record:416
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._54",instance="local"}) by(series_id))[24h:1m])
+  - record: record:417
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._41",instance="local"}) by(series_id))[24h:1m])
+  - record: record:418
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._22",instance="local"}) by(series_id))[24h:1m])
+- name: 100000:7d:10m
+  rules:
+  - record: record:419
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,2}",instance="local"}) by(series_id))[7d:10m])
+- name: 1000000:7d:10m
+  rules:
+  - record: record:420
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,3}",instance="local"}) by(series_id))[7d:10m])
+- name: 10:7d:10m
+  rules:
+  - record: record:421
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._14",instance="local"}) by(series_id))[7d:10m])
+  - record: record:422
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._15",instance="local"}) by(series_id))[7d:10m])
+  - record: record:423
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._4",instance="local"}) by(series_id))[7d:10m])
+  - record: record:424
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[7d:10m])
+  - record: record:425
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[7d:10m])
+  - record: record:426
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[7d:10m])
+  - record: record:427
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._3",instance="local"}) by(series_id))[7d:10m])
+  - record: record:428
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[7d:10m])
+  - record: record:429
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._11",instance="local"}) by(series_id))[7d:10m])
+  - record: record:430
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._3",instance="local"}) by(series_id))[7d:10m])
+  - record: record:431
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[7d:10m])
+  - record: record:432
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._20",instance="local"}) by(series_id))[7d:10m])
+  - record: record:433
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._11",instance="local"}) by(series_id))[7d:10m])
+  - record: record:434
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._11",instance="local"}) by(series_id))[7d:10m])
+  - record: record:435
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._12",instance="local"}) by(series_id))[7d:10m])
+  - record: record:436
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._11",instance="local"}) by(series_id))[7d:10m])
+  - record: record:437
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._18",instance="local"}) by(series_id))[7d:10m])
+  - record: record:438
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._6",instance="local"}) by(series_id))[7d:10m])
+  - record: record:439
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[7d:10m])
+  - record: record:440
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._0",instance="local"}) by(series_id))[7d:10m])
+  - record: record:441
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._5",instance="local"}) by(series_id))[7d:10m])
+- name: 100:7d:10m
+  rules:
+  - record: record:442
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._0",instance="local"}) by(series_id))[7d:10m])
+  - record: record:443
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[7d:10m])
+  - record: record:444
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._8",instance="local"}) by(series_id))[7d:10m])
+  - record: record:445
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._6",instance="local"}) by(series_id))[7d:10m])
+  - record: record:446
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[7d:10m])
+  - record: record:447
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._12",instance="local"}) by(series_id))[7d:10m])
+  - record: record:448
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._10",instance="local"}) by(series_id))[7d:10m])
+  - record: record:449
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._0",instance="local"}) by(series_id))[7d:10m])
+  - record: record:450
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._5",instance="local"}) by(series_id))[7d:10m])
+  - record: record:451
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._13",instance="local"}) by(series_id))[7d:10m])
+  - record: record:452
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._19",instance="local"}) by(series_id))[7d:10m])
+  - record: record:453
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._10",instance="local"}) by(series_id))[7d:10m])
+  - record: record:454
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._13",instance="local"}) by(series_id))[7d:10m])
+  - record: record:455
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[7d:10m])
+  - record: record:456
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[7d:10m])
+  - record: record:457
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._11",instance="local"}) by(series_id))[7d:10m])
+  - record: record:458
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[7d:10m])
+  - record: record:459
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._17",instance="local"}) by(series_id))[7d:10m])
+  - record: record:460
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[7d:10m])
+  - record: record:461
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._13",instance="local"}) by(series_id))[7d:10m])
+  - record: record:462
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._18",instance="local"}) by(series_id))[7d:10m])
+- name: 1000:7d:10m
+  rules:
+  - record: record:463
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._3",instance="local"}) by(series_id))[7d:10m])
+  - record: record:464
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[7d:10m])
+  - record: record:465
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._4",instance="local"}) by(series_id))[7d:10m])
+  - record: record:466
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[7d:10m])
+  - record: record:467
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[7d:10m])
+- name: 10000:7d:10m
+  rules:
+  - record: record:468
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,1}",instance="local"}) by(series_id))[7d:10m])
+- name: 1000000:30d:10m
+  rules:
+  - record: record:469
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,3}",instance="local"}) by(series_id))[30d:10m])
+- name: 10:30d:10m
+  rules:
+  - record: record:470
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[30d:10m])
+  - record: record:471
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._0",instance="local"}) by(series_id))[30d:10m])
+  - record: record:472
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[30d:10m])
+  - record: record:473
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._5",instance="local"}) by(series_id))[30d:10m])
+  - record: record:474
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._7",instance="local"}) by(series_id))[30d:10m])
+  - record: record:475
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._0",instance="local"}) by(series_id))[30d:10m])
+  - record: record:476
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._6",instance="local"}) by(series_id))[30d:10m])
+  - record: record:477
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[30d:10m])
+  - record: record:478
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._4",instance="local"}) by(series_id))[30d:10m])
+  - record: record:479
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,1}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[30d:10m])
+- name: 100:30d:10m
+  rules:
+  - record: record:480
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._3",instance="local"}) by(series_id))[30d:10m])
+  - record: record:481
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._3",instance="local"}) by(series_id))[30d:10m])
+  - record: record:482
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._2",instance="local"}) by(series_id))[30d:10m])
+  - record: record:483
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._8",instance="local"}) by(series_id))[30d:10m])
+  - record: record:484
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._9",instance="local"}) by(series_id))[30d:10m])
+  - record: record:485
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._4",instance="local"}) by(series_id))[30d:10m])
+  - record: record:486
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._8",instance="local"}) by(series_id))[30d:10m])
+  - record: record:487
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._5",instance="local"}) by(series_id))[30d:10m])
+  - record: record:488
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._5",instance="local"}) by(series_id))[30d:10m])
+  - record: record:489
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,2}", __name__ =~"avalanche_metric_mmmmm_._0",instance="local"}) by(series_id))[30d:10m])
+- name: 1000:30d:10m
+  rules:
+  - record: record:490
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1",instance="local"}) by(series_id))[30d:10m])
+  - record: record:491
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0",instance="local"}) by(series_id))[30d:10m])
+- name: 10000:30d:10m
+  rules:
+  - record: record:492
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,1}",instance="local"}) by(series_id))[30d:10m])
+- name: 100000:30d:10m
+  rules:
+  - record: record:493
+    expr: max_over_time(count(avg({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._0[0-9]{1,2}",instance="local"}) by(series_id))[30d:10m])
