@@ -198,7 +198,7 @@ func generateQueries(size int, labels []string, maxCardinality int) map[string]s
                         num := int(math.Max(1.0 , (float64)(v*size/475) * tdis[t]))
 			//fmt.Printf("\n\n%d:%s:%s", k, t, s)
                         for i := 0; i < num; i++ {
-				ind := r.Intn(num)
+				ind := r.Intn(num) + 1
                                 query := strings.Replace(q, "I", strconv.Itoa(ind), 1)
 				list[query] =  fmt.Sprintf("%d:%s:%s", k, t, s)
 				//fmt.Println(query)
