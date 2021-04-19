@@ -14,9 +14,11 @@ import (
 )
 
 type RecordRuleProbeConfig struct {
-	ReadUrl  url.URL
-	Interval time.Duration
-	Timeout  time.Duration
+	ReadUrl   url.URL
+	Interval  time.Duration
+	Timeout   time.Duration
+	Lookback  time.Duration
+	RuleCount int
 }
 
 var (
@@ -77,6 +79,7 @@ func RecordRuleProbe(pctx context.Context, config RecordRuleProbeConfig) error {
 
 	var wg sync.WaitGroup
 
+	rule_count := config.RuleCount
 	metricsToQuery := []string{}
 	generated := make(map[int]bool)
 	rand.Seed(time.Now().UnixNano())
@@ -85,7 +88,7 @@ func RecordRuleProbe(pctx context.Context, config RecordRuleProbeConfig) error {
 
 	for numGenerated < 20 {
 
-		x := rand.Intn(1000) + 1
+		x := rand.Intn(rule_count) + 1
 
 		if !generated[x] {
 			generated[x] = true
@@ -116,10 +119,11 @@ func RecordRuleProbe(pctx context.Context, config RecordRuleProbeConfig) error {
 func RecordRuleQueryAndRecord(ctx context.Context, metric string, config RecordRuleProbeConfig) error {
 
 	Url := config.ReadUrl
+	look_back := int64(config.Lookback / time.Minute)
 	params := url.Values{}
 
-	query := metric + "{}[5m]"
-	// fmt.Printf("query: %v\n", query)
+	query := metric + "{}[" + strconv.Itoa(int(look_back)) + "m]"
+	fmt.Printf("query: %v\n", query)
 	params.Set("query", query)
 	Url.RawQuery = params.Encode()
 
