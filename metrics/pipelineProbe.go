@@ -334,7 +334,7 @@ func Probe(pctx context.Context, PipelineProbeMetrics []string, config PipelineP
 		defer wg.Done()
 		err := publish(pctx, PipelineProbeMetrics, config)
 		if err != nil {
-			glog.Fatalf("failed to publish PipelineProbeMetrics: %s", err)
+			glog.Error("failed to publish PipelineProbeMetrics: %s", err)
 		}
 	}(PipelineProbeMetrics)
 
