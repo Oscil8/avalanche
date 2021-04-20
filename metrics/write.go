@@ -16,10 +16,10 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/snappy"
 	"github.com/open-fresh/avalanche/pkg/download"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/common/model"
 	"github.com/prometheus/prometheus/prompb"
-	"github.com/prometheus/client_golang/prometheus"
-        "github.com/prometheus/client_golang/prometheus/promauto"
 
 	"github.com/open-fresh/avalanche/pkg/errors"
 	dto "github.com/prometheus/client_model/go"
@@ -27,38 +27,39 @@ import (
 
 const maxErrMsgLen = 256
 
-var(
+var (
 	userAgent = "avalanche"
 
 	writeTotal = promauto.NewCounter(
-                prometheus.CounterOpts{
-                        Name: "write_request_total",
-                        Help: "The total number of write requests",
-                },
-        )
+		prometheus.CounterOpts{
+			Name: "write_request_total",
+			Help: "The total number of write requests",
+		},
+	)
 
-        writeFailures = promauto.NewCounter(
-                prometheus.CounterOpts{
-                        Name: "write_request_failures",
-                        Help: "The total number of write failures",
-                },
-        )
+	writeFailures = promauto.NewCounter(
+		prometheus.CounterOpts{
+			Name: "write_request_failures",
+			Help: "The total number of write failures",
+		},
+	)
 
-        writeLatency = prometheus.NewSummary(
-                prometheus.SummaryOpts{
-                        Name:       "write_request_durations",
-                        Help:       "Write requests latencies in milliseconds",
-                        Objectives: map[float64]float64{0.5: 0.05, 0.9: 0.01, 0.99: 0.001, 0.999: 0.0001},
-                },
-        )
+	writeLatency = prometheus.NewSummary(
+		prometheus.SummaryOpts{
+			Name:       "write_request_durations",
+			Help:       "Write requests latencies in milliseconds",
+			Objectives: map[float64]float64{0.5: 0.05, 0.9: 0.01, 0.99: 0.001, 0.999: 0.0001},
+		},
+	)
 
 	samplesTotal = promauto.NewCounter(
-                prometheus.CounterOpts{
-                        Name: "write_samples_total",
-                        Help: "The total number of sample ingested",
-                },
-        )
+		prometheus.CounterOpts{
+			Name: "write_samples_total",
+			Help: "The total number of sample ingested",
+		},
+	)
 )
+
 func init() {
 	prometheus.MustRegister(writeLatency)
 }
@@ -201,7 +202,6 @@ func (c *Client) write() error {
 		totalTime += time.Since(start)
 		if merr.Count() > 20 {
 			merr.Add(fmt.Errorf("too many errors"))
-			return merr.Err()
 		}
 	}
 	wgPprof.Wait()
@@ -300,7 +300,6 @@ func (c *Client) Store(ctx context.Context, req *prompb.WriteRequest) error {
 
 	ctx, cancel := context.WithTimeout(context.Background(), c.timeout)
 	defer cancel()
-
 
 	httpResp, err := c.client.Do(httpReq.WithContext(ctx))
 	if err != nil {
