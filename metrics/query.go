@@ -168,7 +168,7 @@ func do(query string, c ReadClient) []byte {
 
 	resp, err := c.client.Get(u.String())
 	if err != nil {
-		// fmt.Println(err)
+		fmt.Println("remote read error in query: %v", err)
 		return nil
 	}
 	defer resp.Body.Close()

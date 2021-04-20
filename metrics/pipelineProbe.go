@@ -186,6 +186,10 @@ func remote_write(req *http.Request) error {
 		Timeout: time.Second * 30,
 	}
 	resp, err := httpClient.Do(req)
+	if err != nil {
+		fmt.Printf("Remote write error in pipeline probe: %v", err)
+		return err
+	}
 
 	// fmt.Printf("%+v %+v\n", resp, err)
 
