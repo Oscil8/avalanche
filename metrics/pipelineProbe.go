@@ -17,6 +17,7 @@ import (
 	"math/rand"
 	"net/http"
 	"net/url"
+	"os"
 	"sync"
 	"time"
 )
@@ -98,6 +99,8 @@ func convert_to_prom(PipelineProbeMetrics []string) []prompb.TimeSeries {
 
 	var promseries []prompb.TimeSeries
 
+	host_name := os.Getenv("INSTANCE")
+
 	for i := range PipelineProbeMetrics {
 
 		// time.Sleep(100 * time.Millisecond)
@@ -123,12 +126,18 @@ func convert_to_prom(PipelineProbeMetrics []string) []prompb.TimeSeries {
 			Value: "true",
 		}
 
+		label3 := &prompb.Label{
+			Name:  "instance",
+			Value: host_name,
+		}
+
 		samples := make([]prompb.Sample, 1)
 		samples[0] = *sample
 
-		labels := make([]prompb.Label, 2)
+		labels := make([]prompb.Label, 3)
 		labels[0] = *label1
 		labels[1] = *label2
+		labels[2] = *label3
 
 		timeseries := &prompb.TimeSeries{
 			Labels:  labels,
@@ -227,8 +236,9 @@ func queryAndRecord(ctx context.Context, metric string, config PipelineProbeConf
 
 	Url := config.ReadUrl
 	params := url.Values{}
+	host_name := os.Getenv("INSTANCE")
 
-	query := metric + "{isProber=\"true\"}[5m]"
+	query := metric + "{isProber=\"true\",instance=\"" + host_name + "\"}[5m]"
 	params.Set("query", query)
 	Url.RawQuery = params.Encode()
 	resp, err := pipelineProbeDo(ctx, "GET", Url.String(), nil, config.HttpBearerToken)
