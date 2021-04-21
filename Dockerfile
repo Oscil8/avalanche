@@ -4,6 +4,7 @@ COPY . .
 RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux go build -o=/bin/avalanche ./cmd
 
 FROM scratch
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=build /bin/avalanche /bin/avalanche
 EXPOSE 9001
 ENTRYPOINT ["/bin/avalanche"]
