@@ -22,10 +22,11 @@ import (
 )
 
 type PipelineProbeConfig struct {
-	ReadUrl  url.URL
-	WriteUrl url.URL
-	Interval time.Duration
-	Timeout  time.Duration
+	ReadUrl         url.URL
+	WriteUrl        url.URL
+	Interval        time.Duration
+	Timeout         time.Duration
+	HttpBearerToken string
 }
 
 type QueryResponse struct {
@@ -230,7 +231,7 @@ func queryAndRecord(ctx context.Context, metric string, config PipelineProbeConf
 	query := metric + "{isProber=\"true\"}[5m]"
 	params.Set("query", query)
 	Url.RawQuery = params.Encode()
-	resp, err := pipelineProbeDo(ctx, "GET", Url.String(), nil)
+	resp, err := pipelineProbeDo(ctx, "GET", Url.String(), nil, config.HttpBearerToken)
 
 	if err != nil {
 		return fmt.Errorf("erros while querying %v\n%s", Url.String())
@@ -267,11 +268,16 @@ func queryAndRecord(ctx context.Context, metric string, config PipelineProbeConf
 
 }
 
-func pipelineProbeDo(ctx context.Context, method string, url string, body io.Reader) ([]byte, error) {
+func pipelineProbeDo(ctx context.Context, method string, url string, body io.Reader, httpBearerToken string) ([]byte, error) {
 
 	// fmt.Printf("Hi!!!!\n")
 
 	req, err := http.NewRequestWithContext(ctx, method, url, body)
+
+	if httpBearerToken != " " {
+		var bearer = "Bearer " + httpBearerToken
+		req.Header.Add("Authorization", bearer)
+	}
 	// fmt.Printf("Request: %v\n", url)
 	if err != nil {
 		return nil, err

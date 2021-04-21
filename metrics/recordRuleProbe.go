@@ -14,11 +14,12 @@ import (
 )
 
 type RecordRuleProbeConfig struct {
-	ReadUrl   url.URL
-	Interval  time.Duration
-	Timeout   time.Duration
-	Lookback  time.Duration
-	RuleCount int
+	ReadUrl         url.URL
+	Interval        time.Duration
+	Timeout         time.Duration
+	Lookback        time.Duration
+	RuleCount       int
+	HttpBearerToken string
 }
 
 var (
@@ -127,7 +128,7 @@ func RecordRuleQueryAndRecord(ctx context.Context, metric string, config RecordR
 	params.Set("query", query)
 	Url.RawQuery = params.Encode()
 
-	resp, err := pipelineProbeDo(ctx, "GET", Url.String(), nil)
+	resp, err := pipelineProbeDo(ctx, "GET", Url.String(), nil, config.HttpBearerToken)
 
 	if err != nil {
 		return fmt.Errorf("erros while querying %v\n%s", Url.String())

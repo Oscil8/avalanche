@@ -41,6 +41,7 @@ var (
 	pipelineProbeInterval   = kingpin.Flag("pipeline-probe-interval", "delay between succesive pipeline probes.").Default("10s").Duration()
 	recordRuleProbeLookBack = kingpin.Flag("record-rule-probe-lookback", "time to lookback in query when probing rules.").Default("2m").Duration()
 	recordRuleMaxCount      = kingpin.Flag("record-rule-max-count", "maximum number of rules in the system to be probed.").Default("3000").Int()
+	httpBearerToken         = kingpin.Flag("http-bearer-token", "Http Bearer token to be sent for secure remote requests").Default(" ").String()
 )
 
 func Serve() {
@@ -61,6 +62,7 @@ func Query() {
 			Tenant:          *remoteTenant,
 			ConstLabels:     *constLabels,
 			MaxCardinality:  maxCardinality,
+			HttpBearerToken: *httpBearerToken,
 		}
 		metrics.Query(readConfig)
 	}()
@@ -71,10 +73,11 @@ func PipelineProbe() {
 
 		timeout, _ := time.ParseDuration("30s")
 		pipelineProbeConfig := metrics.PipelineProbeConfig{
-			WriteUrl: **remoteURL,
-			ReadUrl:  **remoteReadURL,
-			Interval: *pipelineProbeInterval,
-			Timeout:  timeout,
+			WriteUrl:        **remoteURL,
+			ReadUrl:         **remoteReadURL,
+			Interval:        *pipelineProbeInterval,
+			Timeout:         timeout,
+			HttpBearerToken: *httpBearerToken,
 		}
 
 		ctx, cancel := context.WithCancel(context.Background())
@@ -90,11 +93,12 @@ func RecordingProbe() {
 		timeout, _ := time.ParseDuration("30s")
 
 		recordRuleProbeConfig := metrics.RecordRuleProbeConfig{
-			ReadUrl:   **remoteReadURL,
-			Interval:  *pipelineProbeInterval,
-			Timeout:   timeout,
-			Lookback:  *recordRuleProbeLookBack,
-			RuleCount: *recordRuleMaxCount,
+			ReadUrl:         **remoteReadURL,
+			Interval:        *pipelineProbeInterval,
+			Timeout:         timeout,
+			Lookback:        *recordRuleProbeLookBack,
+			RuleCount:       *recordRuleMaxCount,
+			HttpBearerToken: *httpBearerToken,
 		}
 
 		ctx, cancel := context.WithCancel(context.Background())

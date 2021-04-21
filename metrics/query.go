@@ -68,6 +68,7 @@ type ConfigRead struct {
 	Tenant          string
 	ConstLabels     []string
 	MaxCardinality  int
+	HttpBearerToken string
 }
 
 // Client for the remote write requests.
@@ -166,7 +167,14 @@ func do(query string, c ReadClient) []byte {
 	q.Set("query", query)
 	u.RawQuery = q.Encode()
 
-	resp, err := c.client.Get(u.String())
+	var http_bearer_token = c.config.HttpBearerToken
+	req, err := http.NewRequest("GET", u.String(), nil)
+
+	if http_bearer_token != " " {
+		var bearer = "Bearer " + http_bearer_token
+		req.Header.Add("Authorization", bearer)
+	}
+	resp, err := c.client.Do(req)
 	if err != nil {
 		fmt.Print(err)
 		return nil
