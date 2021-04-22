@@ -51,7 +51,7 @@ func generateQueries(size int, maxCardinality int) {
 				ind := r.Intn(num) + 1
 				query := strings.Replace(q, "I", strconv.Itoa(ind), 1)
 				list[query] = fmt.Sprintf("%d:%s:%s", k, t, s)
-				fmt.Printf("\n  - record:%d", i)
+				fmt.Printf("\n  - record: record:%d", i)
 				fmt.Printf("\n    expr: %s", query)
 			}
 			total += num
