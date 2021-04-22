@@ -19,11 +19,12 @@ import (
 )
 
 // queries map with cardinality as key aa well as value should be cardinality
-var qmap = map[int]string{10: "max_over_time(count({series_id=~\"[0-9]{1,1}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})[T:S])", 100: "max_over_time(count({series_id=~\"[0-9]{1,2}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})[T:S])", 1000: "max_over_time(count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})[T:S])", 10000: "max_over_time(count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,1}\",C})[T:S])", 100000: "max_over_time(count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,2}\",C})[T:S])", 1000000: "max_over_time(count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,3}\",C})[T:S])"}
+//var qmap = map[int]string{10: "max_over_time(count({series_id=~\"[0-9]{1,1}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})[S])", 100: "max_over_time(count({series_id=~\"[0-9]{1,2}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})[S])", 1000: "max_over_time(count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})[S])", 10000: "max_over_time(count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,1}\",C})[S])", 100000: "max_over_time(count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,2}\",C})[S])", 1000000: "max_over_time(count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,3}\",C})[S])"}
+var qmap = map[int]string{10: "count({series_id=~\"[0-9]{1,1}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})", 100: "count({series_id=~\"[0-9]{1,2}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})", 1000: "count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})", 10000: "count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,1}\",C})", 100000: "count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,2}\",C})", 1000000: "count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,3}\",C})"}
 
 var (
-	tstep = map[string]string{"2h": "10s", "24h": "1m", "7d": "10m", "30d": "10m"}
-	tdis  = map[string]float64{"2h": 0.5, "24h": 0.35, "7d": 0.1, "30d": 0.05}
+	tstep = map[string]string{"7200": "10", "86400": "60", "806800": "600", "25920000": "600"}
+	tdis  = map[string]float64{"7200": 0.5, "86400": 0.35, "806800": 0.1, "25920000": 0.05}
 	cdis  = map[int]int{10: 200, 100: 200, 1000: 50, 10000: 10, 100000: 10, 1000000: 5}
 
 	queryTotal = promauto.NewCounterVec(
@@ -87,7 +88,7 @@ type data struct {
 }
 type series struct {
 	Metric map[string]string
-	Value  [2]interface{}
+	Values  [][2]interface{}
 }
 
 func init() {
@@ -141,13 +142,22 @@ func runQueryBatch(config ConfigRead, c ReadClient) {
 			timer := prometheus.NewTimer(queryLatency.WithLabelValues(group))
 			defer timer.ObserveDuration()
 
-			bytes := do(q, c)
+			scope := strings.Split(group, ":")
+
+			timeInSecs, _ := strconv.ParseInt(scope[1], 10, 64)
+			step, _ := strconv.ParseInt(scope[2], 10, 64)
+
+			bytes := do(q, timeInSecs, step, c)
 			var data Response
 			json.Unmarshal(bytes, &data)
-			expectedValue := strings.Split(group, ":")[0]
-			if data.Data != nil && len(data.Data.Result) > 0 && len(data.Data.Result[0].Value) > 0 {
-				//fmt.Printf("%s gave %s, expected %s \n", q, data.Data.Result[0].Value[1], expectedValue)
-				if data.Data.Result[0].Value[1] == expectedValue {
+
+			expectedValue := scope[0]
+
+			//fmt.Printf("%s , %d, %d", q,timeInSecs, step) 
+			if data.Data != nil && len(data.Data.Result) > 0 && len(data.Data.Result[0].Values) > 0 {
+				//fmt.Printf("%s gave %s, expected %s \n", q, data.Data.Result[0].Values[0][1], expectedValue)
+				numOfPoints := len(data.Data.Result[0].Values)
+				if data.Data.Result[0].Values[numOfPoints - 1][1] == expectedValue {
 					queryAccuracy.WithLabelValues(group).Inc()
 				}
 			} else {
@@ -160,13 +170,20 @@ func runQueryBatch(config ConfigRead, c ReadClient) {
 }
 
 // Make a HTTP Get query and return result
-func do(query string, c ReadClient) []byte {
+func do(query string, timeInterval int64, step int64, c ReadClient) []byte {
 
 	u := c.config.URL
 	q := u.Query()
 	q.Set("query", query)
+	endTime := time.Now().Unix()
+	q.Set("end", strconv.FormatInt(endTime, 10))
+	q.Set("start", strconv.FormatInt(endTime - timeInterval, 10))
+	q.Set("step", strconv.FormatInt(step, 10))
+	//u.Path = "api/v1/query_range"
+
 	u.RawQuery = q.Encode()
 
+	//fmt.Println(u.String())
 	var http_bearer_token = c.config.HttpBearerToken
 	req, err := http.NewRequest("GET", u.String(), nil)
 
@@ -186,7 +203,7 @@ func do(query string, c ReadClient) []byte {
 
 // Generate query map of given size with query is  key and value is cardinality:timeRange:step
 func generateQueries(size int, labels []string, maxCardinality int) map[string]string {
-	log.Printf("Generating queries \n")
+	log.Printf("Generating %d queries \n", size)
 	timestep := tstep
 	total := 0
 	timestep = tstep
@@ -203,8 +220,9 @@ func generateQueries(size int, labels []string, maxCardinality int) map[string]s
 			q = strings.Replace(q, "T", t, 1)
 			q = strings.Replace(q, "S", s, 1)
 			q = strings.Replace(q, "C", strings.Join(labels, ","), 1)
-			num := int(math.Max(1.0, (float64)(v*size/475)*tdis[t]))
-			//fmt.Printf("\n\n%d:%s:%s", k, t, s)
+			num := int(math.Max(1.0, (float64)(v*size/475.0)*tdis[t]))
+			//fmt.Printf("\n\n%d:%s:%s\n", k, t, s)
+			//fmt.Printf("%d %d %d %f", num, v*size, v*size /475, (float64)(v*size/475)*tdis[t])
 			for i := 0; i < num; i++ {
 				ind := r.Intn(num) + 1
 				query := strings.Replace(q, "I", strconv.Itoa(ind), 1)
