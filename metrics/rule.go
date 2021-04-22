@@ -45,7 +45,7 @@ func generateQueries(size int, maxCardinality int) {
 			//fmt.Printf("\n- name: %d:%s:%s:%d", 40*k, t, s, i%100)
 			for i := 0; i < num; i++ {
 				if i %100 == 0 {
-					fmt.Printf("\n- name: %d:%s:%s:%d", 40*k, t, s, i%100)
+					fmt.Printf("\n- name: %d:%s:%s:%d", 40*k, t, s, i/100)
 					fmt.Printf("\n  rules: \n")
 				}
 				ind := r.Intn(num) + 1
