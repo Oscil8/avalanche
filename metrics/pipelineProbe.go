@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gogo/protobuf/proto"
-	"github.com/golang/glog"
+	"log"
 	"github.com/golang/snappy"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
@@ -354,7 +354,7 @@ func Probe(pctx context.Context, PipelineProbeMetrics []string, config PipelineP
 		defer wg.Done()
 		err := publish(pctx, PipelineProbeMetrics, config)
 		if err != nil {
-			glog.Error("failed to publish PipelineProbeMetrics: %s", err)
+			log.Printf("failed to publish PipelineProbeMetrics: %s", err)
 		}
 	}(PipelineProbeMetrics)
 
