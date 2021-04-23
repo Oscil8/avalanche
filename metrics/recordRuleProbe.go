@@ -125,6 +125,7 @@ func RecordRuleQueryAndRecord(ctx context.Context, metric string, config RecordR
 
 	query := metric + "{}[" + strconv.Itoa(int(look_back)) + "m]"
 	// fmt.Printf("query: %v\n", query)
+	Url.Path = Url.Path + "/api/v1/query"
 	params.Set("query", query)
 	Url.RawQuery = params.Encode()
 

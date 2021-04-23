@@ -173,13 +173,13 @@ func runQueryBatch(config ConfigRead, c ReadClient) {
 func do(query string, timeInterval int64, step int64, c ReadClient) []byte {
 
 	u := c.config.URL
+	u.Path = u.Path + "/api/v1/query_range"
 	q := u.Query()
 	q.Set("query", query)
 	endTime := time.Now().Unix()
 	q.Set("end", strconv.FormatInt(endTime, 10))
 	q.Set("start", strconv.FormatInt(endTime - timeInterval, 10))
 	q.Set("step", strconv.FormatInt(step, 10))
-	//u.Path = "api/v1/query_range"
 
 	u.RawQuery = q.Encode()
 

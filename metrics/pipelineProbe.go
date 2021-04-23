@@ -240,6 +240,7 @@ func queryAndRecord(ctx context.Context, metric string, config PipelineProbeConf
 
 	query := metric + "{isProber=\"true\",instance=\"" + host_name + "\"}[5m]"
 	params.Set("query", query)
+	Url.Path = Url.Path + "/api/v1/query"
 	Url.RawQuery = params.Encode()
 	resp, err := pipelineProbeDo(ctx, "GET", Url.String(), nil, config.HttpBearerToken)
 
