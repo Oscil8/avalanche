@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -42,6 +43,7 @@ var (
 	recordRuleProbeLookBack = kingpin.Flag("record-rule-probe-lookback", "time to lookback in query when probing rules.").Default("2m").Duration()
 	recordRuleMaxCount      = kingpin.Flag("record-rule-max-count", "maximum number of rules in the system to be probed.").Default("3000").Int()
 	httpBearerToken         = kingpin.Flag("http-bearer-token", "Http Bearer token to be sent for secure remote requests").Default(" ").String()
+	token			= "dummy"
 )
 
 func Serve() {
@@ -62,7 +64,7 @@ func Query() {
 			Tenant:          *remoteTenant,
 			ConstLabels:     *constLabels,
 			MaxCardinality:  maxCardinality,
-			HttpBearerToken: *httpBearerToken,
+			HttpBearerToken: token,
 		}
 		metrics.Query(readConfig)
 	}()
@@ -77,7 +79,7 @@ func PipelineProbe() {
 			ReadUrl:         **remoteReadURL,
 			Interval:        *pipelineProbeInterval,
 			Timeout:         timeout,
-			HttpBearerToken: *httpBearerToken,
+			HttpBearerToken: token,
 		}
 
 		ctx, cancel := context.WithCancel(context.Background())
@@ -98,7 +100,7 @@ func RecordingProbe() {
 			Timeout:         timeout,
 			Lookback:        *recordRuleProbeLookBack,
 			RuleCount:       *recordRuleMaxCount,
-			HttpBearerToken: *httpBearerToken,
+			HttpBearerToken: token,
 		}
 
 		ctx, cancel := context.WithCancel(context.Background())
@@ -113,6 +115,16 @@ func main() {
 	log.SetFlags(log.Ltime | log.Lshortfile) // Show file name and line in logs.
 	kingpin.CommandLine.Help = "avalanche - metrics test server"
 	kingpin.Parse()
+
+	tokens := strings.Split(*httpBearerToken,",")
+	id := strings.Split((*constLabels)[0], "-")
+
+	if id[0] == "instance=avalanche" {
+		// this one is statefulset , we need to split token
+		i, _ := strconv.Atoi(id[1])
+		token = tokens[i]
+		fmt.Printf("using token %s", token) 
+	}
 
 	stop := make(chan struct{})
 	defer close(stop)
