@@ -1,4 +1,4 @@
-package metrics
+package main
 
 import (
 	"fmt"
@@ -14,8 +14,8 @@ import (
 
 var rmap = map[int]string{1: "max_over_time(count({series_id=~\"0\", __name__ =~\"avalanche_metric_mmmmm_._I\"})[T:S])",10: "max_over_time(count({series_id=~\"[0-9]{1,1}\", __name__ =~\"avalanche_metric_mmmmm_._I\"})[T:S])", 100: "max_over_time(count({series_id=~\"[0-9]{1,2}\", __name__ =~\"avalanche_metric_mmmmm_._I\"})[T:S])", 1000: "max_over_time(count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I\"})[T:S])", 10000: "max_over_time(count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,1}\"})[T:S])", 100000: "max_over_time(count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,2}\"})[T:S])", 1000000: "max_over_time(count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,3}\"})[T:S])"}
 var (
-	tStep = map[string]string{"2h": "10s", "24h": "1m", "7d": "10m", "30d": "10m"}
-	tDis  = map[string]float64{"2h": 0.7, "24h": 0.15, "7d": 0.1, "30d": 0.05}
+	tStep = map[string]string{"30m": "30s", "2h": "30s", "24h": "1m", "7d": "10m", "30d": "10m"}
+	tDis  = map[string]float64{"30m": 0.9, "2h": 0.08, "24h": 0.02, "30d": 0.001}
 	cDis  = map[int]int{1: 200, 10: 200, 100: 50, 1000: 10, 10000: 10, 100000: 5}
 
 )
@@ -51,7 +51,7 @@ func generateRuleQueries(size int, maxCardinality int) {
 				ind := r.Intn(num) + 1
 				query := strings.Replace(q, "I", strconv.Itoa(ind), 1)
 				list[query] = fmt.Sprintf("%d:%s:%s", k, t, s)
-				fmt.Printf("\n  - record: record:%d", i)
+				fmt.Printf("\n  - record: record:%d", total+i)
 				fmt.Printf("\n    expr: %s", query)
 			}
 			total += num

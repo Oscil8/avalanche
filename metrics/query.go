@@ -23,9 +23,9 @@ import (
 var qmap = map[int]string{10: "count({series_id=~\"[0-9]{1,1}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})", 100: "count({series_id=~\"[0-9]{1,2}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})", 1000: "count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})", 10000: "count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,1}\",C})", 100000: "count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,2}\",C})", 1000000: "count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,3}\",C})"}
 
 var (
-	tstep = map[string]string{"7200": "10", "86400": "60", "806800": "600", "25920000": "600"}
-	tdis  = map[string]float64{"7200": 0.5, "86400": 0.35, "806800": 0.1, "25920000": 0.05}
-	cdis  = map[int]int{10: 200, 100: 200, 1000: 50, 10000: 10, 100000: 10, 1000000: 5}
+	tstep = map[string]string{"3600": "30", "7200": "30", "86400": "60", "806800": "600", "25920000": "600"}
+	tdis  = map[string]float64{"3600": 0.8, "7200": 0.15, "86400": 0.02, "806800": 0.025, "25920000": 0.005}
+	cdis  = map[int]float64{10: 0.42, 100: 0.42, 1000: 0.11, 10000: 0.03, 100000: 0.02}
 
 	queryTotal = promauto.NewCounterVec(
 		prometheus.CounterOpts{
@@ -50,6 +50,14 @@ var (
 		},
 		[]string{"group"},
 	)
+
+	 queryResponseCode = promauto.NewCounterVec(
+                prometheus.CounterOpts{
+                        Name: "promql_query_response_ode",
+                        Help: "Response codes for promql query",
+                },
+                []string{"group","code"},
+        )
 
 	queryLatency = prometheus.NewSummaryVec(
 		prometheus.SummaryOpts{
@@ -130,6 +138,7 @@ func Query(config ConfigRead) {
 
 func runQueryBatch(config ConfigRead, c ReadClient) {
 
+	log.Printf("Starting query Batch")
 	var wg sync.WaitGroup
 	queries := generateQueries(config.Size, config.ConstLabels, config.MaxCardinality)
 
@@ -147,7 +156,7 @@ func runQueryBatch(config ConfigRead, c ReadClient) {
 			timeInSecs, _ := strconv.ParseInt(scope[1], 10, 64)
 			step, _ := strconv.ParseInt(scope[2], 10, 64)
 
-			bytes := do(q, timeInSecs, step, c)
+			bytes := do(q, timeInSecs, step, group, c)
 			var data Response
 			json.Unmarshal(bytes, &data)
 
@@ -167,10 +176,11 @@ func runQueryBatch(config ConfigRead, c ReadClient) {
 
 		wg.Wait()
 	}
+	log.Printf("Query Batch ends")
 }
 
 // Make a HTTP Get query and return result
-func do(query string, timeInterval int64, step int64, c ReadClient) []byte {
+func do(query string, timeInterval int64, step int64, group string, c ReadClient) []byte {
 
 	u := c.config.URL
 	u.Path = u.Path + "/api/v1/query_range"
@@ -184,7 +194,13 @@ func do(query string, timeInterval int64, step int64, c ReadClient) []byte {
 	u.RawQuery = q.Encode()
 
 	//fmt.Println(u.String())
-	var http_bearer_token = c.config.HttpBearerToken
+	// Take random tokens, reproducing proxy with multiple instances having separate tokens
+	tokens := strings.Split(c.config.HttpBearerToken, ",")
+	s := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(s)
+	id := r.Intn(len(tokens))
+	var http_bearer_token = tokens[id]
+
 	req, err := http.NewRequest("GET", u.String(), nil)
 
 	if http_bearer_token != " " {
@@ -196,6 +212,12 @@ func do(query string, timeInterval int64, step int64, c ReadClient) []byte {
 		fmt.Print(err)
 		return nil
 	}
+
+	if resp.StatusCode != http.StatusOK {
+	    fmt.Printf("Non-OK HTTP status for : %s\n", u.String())
+	}
+	queryResponseCode.WithLabelValues(group, strconv.Itoa(resp.StatusCode)).Inc()
+
 	defer resp.Body.Close()
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
 	return bodyBytes
@@ -220,9 +242,9 @@ func generateQueries(size int, labels []string, maxCardinality int) map[string]s
 			q = strings.Replace(q, "T", t, 1)
 			q = strings.Replace(q, "S", s, 1)
 			q = strings.Replace(q, "C", strings.Join(labels, ","), 1)
-			num := int(math.Max(1.0, (float64)(v*size/475.0)*tdis[t]))
-			//fmt.Printf("\n\n%d:%s:%s\n", k, t, s)
-			//fmt.Printf("%d %d %d %f", num, v*size, v*size /475, (float64)(v*size/475)*tdis[t])
+			num := int(math.Max(1.0, v*tdis[t] *  (float64)(size)))  
+			//fmt.Printf("\n%d:%s\n", k, t)
+			//fmt.Printf("%d %f %f %f \n", num, v, tdis[t], v*tdis[t] *  (float64)(size))
 			for i := 0; i < num; i++ {
 				ind := r.Intn(num) + 1
 				query := strings.Replace(q, "I", strconv.Itoa(ind), 1)
@@ -232,5 +254,6 @@ func generateQueries(size int, labels []string, maxCardinality int) map[string]s
 			total += num
 		}
 	}
+	log.Printf("Generated %d queries \n", len(list))
 	return list
 }
