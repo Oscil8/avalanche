@@ -18,6 +18,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 	"sync"
 	"time"
 )
@@ -242,6 +243,7 @@ func queryAndRecord(ctx context.Context, metric string, config PipelineProbeConf
 	params.Set("query", query)
 	Url.Path = Url.Path + "/api/v1/query"
 	Url.RawQuery = params.Encode()
+
 	resp, err := pipelineProbeDo(ctx, "GET", Url.String(), nil, config.HttpBearerToken)
 
 	if err != nil {
@@ -286,7 +288,14 @@ func pipelineProbeDo(ctx context.Context, method string, url string, body io.Rea
 	req, err := http.NewRequestWithContext(ctx, method, url, body)
 
 	if httpBearerToken != " " {
-		var bearer = "Bearer " + httpBearerToken
+		// Take random tokens, reproducing proxy with multiple instances having separate tokens
+		tokens := strings.Split(httpBearerToken, ",")
+		s := rand.NewSource(time.Now().UnixNano())
+		r := rand.New(s)
+		id := r.Intn(len(tokens))
+		var http_bearer_token = tokens[id]
+
+		var bearer = "Bearer " + http_bearer_token
 		req.Header.Add("Authorization", bearer)
 	}
 	// fmt.Printf("Request: %v\n", url)
