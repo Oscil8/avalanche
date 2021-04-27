@@ -161,11 +161,10 @@ func RecordRuleQueryAndRecord(ctx context.Context, metric string, config RecordR
 
 	if latency >= maxLatency {
 		recordingRuleFailures.WithLabelValues("record_rule_prober").Inc()
-	} else {
-
-		recordingRuleLatencyTime.WithLabelValues("record_rule_prober").Observe(latency)
-		recordingRuleLatencySummary.WithLabelValues("record_rule_prober").Observe(latency)
 	}
+
+	recordingRuleLatencyTime.WithLabelValues("record_rule_prober").Observe(latency)
+	recordingRuleLatencySummary.WithLabelValues("record_rule_prober").Observe(latency)
 
 	return err
 
