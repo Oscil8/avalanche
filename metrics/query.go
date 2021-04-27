@@ -255,8 +255,11 @@ func generateQueries(size int, labels []string, maxCardinality int) map[string]s
 			//fmt.Printf("%d, %f, %f, %f, %d\n", num, v, tdis[t], v*tdis[t] *  (float64)(size), total)
 			for i := 0; i < num; i++ {
 				// if v > 1000, I (metric number) can have resticted vlues. i.e  from 0 to v/1000 -1
-				merticCardinality = math.Min( 1000, v/1000)
-				ind := r.Intn(1000)
+				merticCardinality := 1000
+				if v > 1000 {
+					merticCardinality = int(math.Min( 1000, v/1000))
+				}
+				ind := r.Intn(merticCardinality)
 				query := strings.Replace(q, "I", strconv.Itoa(ind), 1)
 				list[query] = fmt.Sprintf("%d:%s:%s", k, t, s)
 				//fmt.Println(query)
