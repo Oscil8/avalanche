@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"sort"
+	"strconv"
 	"sync"
 	"time"
 
@@ -43,6 +44,14 @@ var (
 			Help: "The total number of write failures",
 		},
 	)
+
+	writeResponseCodes = promauto.NewCounterVec(
+                prometheus.CounterOpts{
+                        Name: "write_request_responses",
+                        Help: "response codes of write requests",
+                },
+		[]string{"code"},
+        )
 
 	writeLatency = prometheus.NewSummary(
 		prometheus.SummaryOpts{
@@ -307,6 +316,7 @@ func (c *Client) Store(ctx context.Context, req *prompb.WriteRequest) error {
 	}
 	defer httpResp.Body.Close()
 
+	writeResponseCodes.WithLabelValues(strconv.Itoa(httpResp.StatusCode)).Inc()
 	if httpResp.StatusCode/100 != 2 {
 		scanner := bufio.NewScanner(io.LimitReader(httpResp.Body, maxErrMsgLen))
 		line := ""
@@ -314,6 +324,7 @@ func (c *Client) Store(ctx context.Context, req *prompb.WriteRequest) error {
 			line = scanner.Text()
 		}
 		err = fmt.Errorf("server returned HTTP status %s: %s", httpResp.Status, line)
+		fmt.Printf("server returned HTTP status %s: %s", httpResp.Status, line)
 	}
 	if httpResp.StatusCode/100 == 5 {
 		return err

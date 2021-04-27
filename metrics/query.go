@@ -170,6 +170,7 @@ func runQueryBatch(config ConfigRead, c ReadClient) {
 					queryAccuracy.WithLabelValues(group).Inc()
 				}
 			} else {
+				fmt.Printf("Empty response for query: %s ",q)
 				queryFailures.WithLabelValues(group).Inc()
 			}
 		}(q, group, c)
@@ -254,12 +255,12 @@ func generateQueries(size int, labels []string, maxCardinality int) map[string]s
 			//fmt.Printf("\n%d:%s\n", k, t)
 			//fmt.Printf("%d, %f, %f, %f, %d\n", num, v, tdis[t], v*tdis[t] *  (float64)(size), total)
 			for i := 0; i < num; i++ {
-				// if v > 1000, I (metric number) can have resticted vlues. i.e  from 0 to v/1000 -1
+				// if k > 1000, I (metric number) can have resticted vlues. i.e  from 0 to v/1000 -1
 				merticCardinality := 1000
-				if v > 1000 {
-					merticCardinality = int(math.Min( 1000, v/1000))
+				if k > 1000 {
+					merticCardinality = int(math.Min( 1000, (float64)(k/1000)))
 				}
-				ind := r.Intn(merticCardinality)
+				ind := r.Intn(merticCardinality -1) + 1
 				query := strings.Replace(q, "I", strconv.Itoa(ind), 1)
 				list[query] = fmt.Sprintf("%d:%s:%s", k, t, s)
 				//fmt.Println(query)
