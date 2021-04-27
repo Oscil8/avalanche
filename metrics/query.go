@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math"
 	"math/rand"
 	"net/http"
 	"net/url"
@@ -242,7 +243,7 @@ func generateQueries(size int, labels []string, maxCardinality int) map[string]s
 			q = strings.Replace(q, "S", s, 1)
 			q = strings.Replace(q, "C", strings.Join(labels, ","), 1)
 			prob := v*tdis[t] *  (float64)(size)
-			// if prob is less than 1 we will deal with a random int , if that number r V r belongs to [0,1..00), r< p, we count occurence as 1
+			// if prob is less than 1 we will deal with a random int , if that number r V r belongs to [0,1), r< p, we count occurence as 1
 			if prob < 1 {
 				randomFloat := r.Float64()
 				if randomFloat  <= prob {
@@ -253,6 +254,8 @@ func generateQueries(size int, labels []string, maxCardinality int) map[string]s
 			//fmt.Printf("\n%d:%s\n", k, t)
 			//fmt.Printf("%d, %f, %f, %f, %d\n", num, v, tdis[t], v*tdis[t] *  (float64)(size), total)
 			for i := 0; i < num; i++ {
+				// if v > 1000, I (metric number) can have resticted vlues. i.e  from 0 to v/1000 -1
+				merticCardinality = math.Min( 1000, v/1000)
 				ind := r.Intn(1000)
 				query := strings.Replace(q, "I", strconv.Itoa(ind), 1)
 				list[query] = fmt.Sprintf("%d:%s:%s", k, t, s)
