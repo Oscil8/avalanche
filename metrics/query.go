@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"math"
 	"math/rand"
 	"net/http"
 	"net/url"
@@ -242,7 +241,15 @@ func generateQueries(size int, labels []string, maxCardinality int) map[string]s
 			q = strings.Replace(q, "T", t, 1)
 			q = strings.Replace(q, "S", s, 1)
 			q = strings.Replace(q, "C", strings.Join(labels, ","), 1)
-			num := int(math.Max(1.0, v*tdis[t] *  (float64)(size)))  
+			prob := v*tdis[t] *  (float64)(size)
+                    	// if prob is less than 1 we will deal with a random int , if that number r V r belongs to [0,1..00), r< p, we count occurence as 1
+                    	if prob < 1 {
+                        	randomFloat := r.Float64()
+                            	if randomFloat  <= prob {
+                             		prob = 1.0
+                            	}
+                    	}
+                    	num := int(prob)  
 			//fmt.Printf("\n%d:%s\n", k, t)
 			//fmt.Printf("%d %f %f %f \n", num, v, tdis[t], v*tdis[t] *  (float64)(size))
 			for i := 0; i < num; i++ {
