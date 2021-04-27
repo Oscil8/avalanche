@@ -213,7 +213,7 @@ func do(query string, timeInterval int64, step int64, group string, c ReadClient
 	}
 
 	if resp.StatusCode != http.StatusOK {
-	    fmt.Printf("Non-OK HTTP status for : %s\n", u.String())
+		fmt.Printf("Non-OK HTTP status for : %d: %s\n", resp.StatusCode, u.String())
 	}
 	queryResponseCode.WithLabelValues(group, strconv.Itoa(resp.StatusCode)).Inc()
 
@@ -242,18 +242,18 @@ func generateQueries(size int, labels []string, maxCardinality int) map[string]s
 			q = strings.Replace(q, "S", s, 1)
 			q = strings.Replace(q, "C", strings.Join(labels, ","), 1)
 			prob := v*tdis[t] *  (float64)(size)
-                    	// if prob is less than 1 we will deal with a random int , if that number r V r belongs to [0,1..00), r< p, we count occurence as 1
-                    	if prob < 1 {
-                        	randomFloat := r.Float64()
-                            	if randomFloat  <= prob {
-                             		prob = 1.0
-                            	}
-                    	}
-                    	num := int(prob)  
+			// if prob is less than 1 we will deal with a random int , if that number r V r belongs to [0,1..00), r< p, we count occurence as 1
+			if prob < 1 {
+				randomFloat := r.Float64()
+				if randomFloat  <= prob {
+					prob = 1.0
+				}
+			}
+			num := int(prob)  
 			//fmt.Printf("\n%d:%s\n", k, t)
-			//fmt.Printf("%d %f %f %f \n", num, v, tdis[t], v*tdis[t] *  (float64)(size))
+			//fmt.Printf("%d, %f, %f, %f, %d\n", num, v, tdis[t], v*tdis[t] *  (float64)(size), total)
 			for i := 0; i < num; i++ {
-				ind := r.Intn(num) + 1
+				ind := r.Intn(1000)
 				query := strings.Replace(q, "I", strconv.Itoa(ind), 1)
 				list[query] = fmt.Sprintf("%d:%s:%s", k, t, s)
 				//fmt.Println(query)
