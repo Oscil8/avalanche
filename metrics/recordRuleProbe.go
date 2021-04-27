@@ -81,38 +81,43 @@ func RecordRuleProbe(pctx context.Context, config RecordRuleProbeConfig) error {
 	var wg sync.WaitGroup
 
 	rule_count := config.RuleCount
-	metricsToQuery := []string{}
-	generated := make(map[int]bool)
 	rand.Seed(time.Now().UnixNano())
 
-	numGenerated := 0
+	for {
 
-	for numGenerated < 20 {
+		metricsToQuery := []string{}
+		generated := make(map[int]bool)
 
-		x := rand.Intn(rule_count) + 1
+		numGenerated := 0
 
-		if !generated[x] {
-			generated[x] = true
-			numGenerated++
+		for numGenerated < 20 {
+
+			x := rand.Intn(rule_count) + 1
+
+			if !generated[x] {
+				generated[x] = true
+				numGenerated++
+			}
+
+		}
+		for k, _ := range generated {
+
+			s := strconv.Itoa(k)
+
+			metricsToQuery = append(metricsToQuery, "record:"+s)
 		}
 
+		for _, m := range metricsToQuery {
+			wg.Add(1)
+			go func(metric string) {
+				defer wg.Done()
+				RecordRuleQueryAndRecord(pctx, metric, config)
+			}(m)
+		}
+
+		wg.Wait()
+
 	}
-	for k, _ := range generated {
-
-		s := strconv.Itoa(k)
-
-		metricsToQuery = append(metricsToQuery, "record:"+s)
-	}
-
-	for _, m := range metricsToQuery {
-		wg.Add(1)
-		go func(metric string) {
-			defer wg.Done()
-			RecordRuleQueryAndRecord(pctx, metric, config)
-		}(m)
-	}
-
-	wg.Wait()
 	return nil
 
 }
