@@ -23,8 +23,8 @@ import (
 var qmap = map[int]string{10: "count({series_id=~\"[0-9]{1,1}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})", 100: "count({series_id=~\"[0-9]{1,2}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})", 1000: "count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I\",C})", 10000: "count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,1}\",C})", 100000: "count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,2}\",C})", 1000000: "count({series_id=~\"[0-9]{1,3}\", __name__ =~\"avalanche_metric_mmmmm_._I[0-9]{1,3}\",C})"}
 
 var (
-	tstep = map[string]string{"3600": "30", "7200": "30", "86400": "60", "806800": "600", "25920000": "600"}
-	tdis  = map[string]float64{"3600": 0.8, "7200": 0.15, "86400": 0.02, "806800": 0.025, "25920000": 0.005}
+	tstep = map[string]string{"3600": "30", "7200": "30", "86400": "60", "806800": "600", "2592000": "600"}
+	tdis  = map[string]float64{"3600": 0.8, "7200": 0.15, "86400": 0.02, "806800": 0.025, "2592000": 0.005}
 	cdis  = map[int]float64{10: 0.42, 100: 0.42, 1000: 0.11, 10000: 0.03, 100000: 0.02}
 
 	queryTotal = promauto.NewCounterVec(
