@@ -39,7 +39,7 @@ var (
 	remoteReadReqsInterval  = kingpin.Flag("remote-read-interval", "delay between each batch of remote query requests.").Default("30s").Duration()
 	remoteTenant            = kingpin.Flag("remote-tenant", "Tenant ID to include in remote_write send").Default("0").String()
 	pipelineProbeInterval   = kingpin.Flag("pipeline-probe-interval", "delay between succesive pipeline probes.").Default("10s").Duration()
-	recordRuleProbeLookBack = kingpin.Flag("record-rule-probe-lookback", "time to lookback in query when probing rules.").Default("2m").Duration()
+	recordRuleProbeLookBack = kingpin.Flag("record-rule-probe-lookback", "time to lookback in query when probing rules.").Default("6m").Duration()
 	recordRuleMaxCount      = kingpin.Flag("record-rule-max-count", "maximum number of rules in the system to be probed.").Default("3000").Int()
 	httpBearerToken         = kingpin.Flag("http-bearer-token", "Http Bearer token to be sent for secure remote requests").Default(" ").String()
 )
@@ -121,7 +121,7 @@ func main() {
 	//	// this one is statefulset , we need to split token
 	//	i, _ := strconv.Atoi(id[1])
 	//	token = tokens[i]
-	//	fmt.Printf("using token %s", token) 
+	//	fmt.Printf("using token %s", token)
 	//}
 
 	stop := make(chan struct{})
