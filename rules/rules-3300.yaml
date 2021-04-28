@@ -5926,6 +5926,9 @@ groups:
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._6[0-9]{1,1}"})[30m:30s])
   - record: record:2896
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1[0-9]{1,1}"})[30m:30s])
+    
+- name: 400000:30m:30s:1
+  rules:     
   - record: record:2897
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._8[0-9]{1,1}"})[30m:30s])
   - record: record:2898
@@ -5948,6 +5951,9 @@ groups:
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._5[0-9]{1,1}"})[30m:30s])
   - record: record:2907
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._3[0-9]{1,1}"})[30m:30s])
+    
+- name: 400000:30m:30s:2
+  rules:     
   - record: record:2908
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._5[0-9]{1,1}"})[30m:30s])
   - record: record:2909
@@ -5970,6 +5976,9 @@ groups:
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._3[0-9]{1,1}"})[30m:30s])
   - record: record:2918
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._3[0-9]{1,1}"})[30m:30s])
+    
+- name: 400000:30m:30s:3
+  rules:     
   - record: record:2919
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1[0-9]{1,1}"})[30m:30s])
   - record: record:2920
@@ -5992,6 +6001,9 @@ groups:
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._1[0-9]{1,1}"})[30m:30s])
   - record: record:2929
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._5[0-9]{1,1}"})[30m:30s])
+    
+- name: 400000:30m:30s:4
+  rules:     
   - record: record:2930
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._3[0-9]{1,1}"})[30m:30s])
   - record: record:2931
@@ -6014,6 +6026,8 @@ groups:
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._4[0-9]{1,1}"})[30m:30s])
   - record: record:2940
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._6[0-9]{1,1}"})[30m:30s])
+- name: 400000:30m:30s:5
+  rules:     
   - record: record:2941
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._3[0-9]{1,1}"})[30m:30s])
   - record: record:2942
@@ -6030,7 +6044,6 @@ groups:
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._9[0-9]{1,1}"})[30m:30s])
 - name: 4000000:30m:30s:0
   rules: 
-
   - record: record:2948
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._97[0-9]{1,2}"})[30m:30s])
   - record: record:2949
@@ -6053,6 +6066,10 @@ groups:
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._51[0-9]{1,2}"})[30m:30s])
   - record: record:2958
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._30[0-9]{1,2}"})[30m:30s])
+
+- name: 4000000:30m:30s:1
+  rules:    
+    
   - record: record:2959
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._60[0-9]{1,2}"})[30m:30s])
   - record: record:2960
@@ -6075,6 +6092,9 @@ groups:
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._68[0-9]{1,2}"})[30m:30s])
   - record: record:2969
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._34[0-9]{1,2}"})[30m:30s])
+    
+- name: 4000000:30m:30s:2
+  rules:
   - record: record:2970
     expr: max_over_time(count({series_id=~"[0-9]{1,3}", __name__ =~"avalanche_metric_mmmmm_._30[0-9]{1,2}"})[30m:30s])
   - record: record:2971
