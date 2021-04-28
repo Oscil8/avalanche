@@ -48,7 +48,12 @@ func generateRuleQueries(size int, maxCardinality int) {
 					fmt.Printf("\n- name: %d:%s:%s:%d", 40*k, t, s, i/100)
 					fmt.Printf("\n  rules: \n")
 				}
-				ind := r.Intn(num) + 1
+				// if k > 1000, I (metric number) can have resticted vlues. i.e  from 0 to v/1000 -1
+				merticCardinality := 1000
+				if k > 1000 {
+					merticCardinality = int(math.Min( 1000, (float64)(k/1000)))
+				}
+				ind := r.Intn(merticCardinality -1) + 1
 				query := strings.Replace(q, "I", strconv.Itoa(ind), 1)
 				list[query] = fmt.Sprintf("%d:%s:%s", k, t, s)
 				fmt.Printf("\n  - record: record:%d", total+i)
