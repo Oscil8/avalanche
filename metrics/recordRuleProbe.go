@@ -81,13 +81,14 @@ func RecordRuleProbe(pctx context.Context, config RecordRuleProbeConfig) error {
 	var wg sync.WaitGroup
 
 	rule_count := config.RuleCount
+	rand.Seed(time.Now().UnixNano())
+
 	metricsToQuery := []string{}
 	generated := make(map[int]bool)
-	rand.Seed(time.Now().UnixNano())
 
 	numGenerated := 0
 
-	for numGenerated < 20 {
+	for numGenerated < 10 {
 
 		x := rand.Intn(rule_count) + 1
 
@@ -113,6 +114,7 @@ func RecordRuleProbe(pctx context.Context, config RecordRuleProbeConfig) error {
 	}
 
 	wg.Wait()
+
 	return nil
 
 }
