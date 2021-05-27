@@ -60,7 +60,13 @@ var (
 			Objectives: map[float64]float64{0.5: 0.05, 0.9: 0.01, 0.99: 0.001, 0.999: 0.0001},
 		},
 	)
-
+	writeLatencyTime = promauto.NewHistogram(
+		prometheus.HistogramOpts{
+			Name:    "write_request_latency",
+			Help:    "write request latency histogram",
+			Buckets: []float64{0.01, 0.05, 0.1, 0.5, 1, 2, 5, 10, 20, 40, 60, 300},
+		},
+	)
 	samplesTotal = promauto.NewCounter(
 		prometheus.CounterOpts{
 			Name: "write_samples_total",
@@ -71,6 +77,7 @@ var (
 
 func init() {
 	prometheus.MustRegister(writeLatency)
+	//prometheus.MustRegister(writeLatencyTime)
 }
 
 // ConfigWrite for the remote write requests.
@@ -189,7 +196,7 @@ func (c *Client) write() error {
 				req := &prompb.WriteRequest{
 					Timeseries: tss[i:end],
 				}
-
+				start := time.Now()
 				writeTotal.Inc()
 				timer := prometheus.NewTimer(prometheus.ObserverFunc(func(v float64) {
 					us := v * 1000
@@ -203,6 +210,7 @@ func (c *Client) write() error {
 					merr.Add(err)
 					return
 				}
+				writeLatencyTime.Observe(time.Since(start).Seconds())
 				mtx.Lock()
 				totalSamplesAct += len(tss[i:end])
 				samplesTotal.Add(float64(len(tss[i:end])))
