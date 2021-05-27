@@ -94,7 +94,10 @@ type Client struct {
 // SendRemoteWrite initializes a http client and
 // sends metrics to a prometheus compatible remote endpoint.
 func SendRemoteWrite(config ConfigWrite) error {
-	var rt http.RoundTripper = &http.Transport{}
+	var rt http.RoundTripper = &http.Transport{
+		MaxIdleConns: 1000,
+		MaxIdleConnsPerHost: 1000,
+	}
 	rt = &cortexTenantRoundTripper{tenant: config.Tenant, rt: rt}
 	httpClient := &http.Client{Transport: rt}
 
