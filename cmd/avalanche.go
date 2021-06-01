@@ -14,6 +14,15 @@ import (
 	"github.com/open-fresh/avalanche/pkg/download"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
+
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/exporters/trace/jaeger"
+	"go.opentelemetry.io/otel/propagation"
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/semconv"
+	"go.opentelemetry.io/otel/sdk/resource"
+
 )
 
 var (
@@ -42,6 +51,7 @@ var (
 	recordRuleProbeLookBack = kingpin.Flag("record-rule-probe-lookback", "time to lookback in query when probing rules.").Default("10m").Duration()
 	recordRuleMaxCount      = kingpin.Flag("record-rule-max-count", "maximum number of rules in the system to be probed.").Default("3000").Int()
 	httpBearerToken         = kingpin.Flag("http-bearer-token", "Http Bearer token to be sent for secure remote requests").Default(" ").String()
+	jaegerURL               = kingpin.Flag("jaeger-url", "URL to send traces to jaeger http(14628) trace API.").String()
 )
 
 func Serve() {
@@ -107,6 +117,37 @@ func RecordingProbe() {
 		metrics.RecordRuleProbeLoop(ctx, recordRuleProbeConfig)
 	}()
 }
+const (
+	service     = "store-demo"
+	environment = "poc-debug"
+	id          = 1
+)
+func initTracer(url string) {
+	// Create stdout exporter to be able to retrieve
+	// the collected spans.
+	// exporter, err := stdout.NewExporter(stdout.WithPrettyPrint())
+	exporter, err := jaeger.NewRawExporter(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// For the demonstration, use sdktrace.AlwaysSample sampler to sample all traces.
+	// In a production application, use sdktrace.ProbabilitySampler with a desired probability.
+	tp := sdktrace.NewTracerProvider(
+		sdktrace.WithSampler(sdktrace.AlwaysSample()),
+		sdktrace.WithBatcher(exporter),
+		sdktrace.WithResource(resource.NewWithAttributes(
+			semconv.ServiceNameKey.String(service),
+			attribute.String("environment", environment),
+			attribute.Int64("ID", id),
+		)),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	otel.SetTracerProvider(tp)
+	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))
+}
 
 func main() {
 	kingpin.Version("0.3")
@@ -114,15 +155,9 @@ func main() {
 	kingpin.CommandLine.Help = "avalanche - metrics test server"
 	kingpin.Parse()
 
-	//tokens := strings.Split(*httpBearerToken,",")
-	//iid := strings.Split((*constLabels)[0], "-")
-
-	//if id[0] == "instance=avalanche" {
-	//	// this one is statefulset , we need to split token
-	//	i, _ := strconv.Atoi(id[1])
-	//	token = tokens[i]
-	//	fmt.Printf("using token %s", token)
-	//}
+	if jaegerURL != nil {
+		initTracer(*jaegerURL)
+	}
 
 	stop := make(chan struct{})
 	defer close(stop)

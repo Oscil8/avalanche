@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/http/httptrace"
 	"net/url"
 	"sort"
 	"strconv"
@@ -24,6 +25,15 @@ import (
 
 	"github.com/open-fresh/avalanche/pkg/errors"
 	dto "github.com/prometheus/client_model/go"
+
+	"go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/baggage"
+	"go.opentelemetry.io/otel/semconv"
+	"go.opentelemetry.io/otel/trace"
 )
 
 const maxErrMsgLen = 256
@@ -106,7 +116,7 @@ func SendRemoteWrite(config ConfigWrite) error {
 		MaxIdleConnsPerHost: 1000,
 	}
 	rt = &cortexTenantRoundTripper{tenant: config.Tenant, rt: rt}
-	httpClient := &http.Client{Transport: rt}
+	httpClient := &http.Client{Transport: otelhttp.NewTransport(rt)}
 
 	c := Client{
 		client:  httpClient,
@@ -306,7 +316,18 @@ func (c *Client) Store(ctx context.Context, req *prompb.WriteRequest) error {
 	}
 
 	compressed := snappy.Encode(nil, data)
-	httpReq, err := http.NewRequest("POST", c.config.URL.String(), bytes.NewReader(compressed))
+	ctx = baggage.ContextWithValues(ctx,
+		attribute.String("username", "donuts"),
+	)
+
+	tr := otel.Tracer("avalanche/client")
+	ctx, span := tr.Start(ctx, "publish", trace.WithAttributes(semconv.PeerServiceKey.String("StoreService")))
+	defer span.End()
+
+	ctx = httptrace.WithClientTrace(ctx, otelhttptrace.NewClientTrace(ctx))
+
+
+	httpReq, err := http.NewRequestWithContext(ctx, "POST", c.config.URL.String(), bytes.NewReader(compressed))
 	if err != nil {
 		// Errors from NewRequest are from unparseable URLs, so are not
 		// recoverable.
@@ -318,7 +339,7 @@ func (c *Client) Store(ctx context.Context, req *prompb.WriteRequest) error {
 	httpReq.Header.Set("X-Prometheus-Remote-Write-Version", "0.1.0")
 	httpReq = httpReq.WithContext(ctx)
 
-	ctx, cancel := context.WithTimeout(context.Background(), c.timeout)
+	ctx, cancel := context.WithTimeout(ctx, c.timeout)
 	defer cancel()
 
 	httpResp, err := c.client.Do(httpReq.WithContext(ctx))
