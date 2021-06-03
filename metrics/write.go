@@ -25,6 +25,7 @@ import (
 
 	"github.com/open-fresh/avalanche/pkg/errors"
 	dto "github.com/prometheus/client_model/go"
+	"github.com/tcnksm/go-httpstat"
 
 	"go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
@@ -339,6 +340,9 @@ func (c *Client) Store(ctx context.Context, req *prompb.WriteRequest) error {
 	httpReq.Header.Set("X-Prometheus-Remote-Write-Version", "0.1.0")
 	httpReq = httpReq.WithContext(ctx)
 
+	var result httpstat.Result
+	ctx = httpstat.WithHTTPStat(httpReq.Context(), &result)
+
 	ctx, cancel := context.WithTimeout(ctx, c.timeout)
 	defer cancel()
 
@@ -361,5 +365,10 @@ func (c *Client) Store(ctx context.Context, req *prompb.WriteRequest) error {
 	if httpResp.StatusCode/100 == 5 {
 		return err
 	}
+
+	result.End(time.Now())
+
+	// Show results
+	log.Printf("%+v", result)
 	return err
 }
