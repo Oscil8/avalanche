@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"context"
+	"crypto/tls"
 	"fmt"
 	"io"
 	"log"
@@ -57,12 +58,12 @@ var (
 	)
 
 	writeResponseCodes = promauto.NewCounterVec(
-                prometheus.CounterOpts{
-                        Name: "write_request_responses",
-                        Help: "response codes of write requests",
-                },
+		prometheus.CounterOpts{
+			Name: "write_request_responses",
+			Help: "response codes of write requests",
+		},
 		[]string{"code"},
-        )
+	)
 
 	writeLatency = prometheus.NewSummary(
 		prometheus.SummaryOpts{
@@ -100,6 +101,7 @@ type ConfigWrite struct {
 	UpdateNotify chan struct{}
 	PprofURLs    []*url.URL
 	Tenant       string
+	HttpBearerToken  string
 }
 
 // Client for the remote write requests.
@@ -112,11 +114,14 @@ type Client struct {
 // SendRemoteWrite initializes a http client and
 // sends metrics to a prometheus compatible remote endpoint.
 func SendRemoteWrite(config ConfigWrite) error {
+	tlsConf := &tls.Config{InsecureSkipVerify: true}
+
 	var rt http.RoundTripper = &http.Transport{
-		MaxIdleConns: 1000,
+		MaxIdleConns:        1000,
 		MaxIdleConnsPerHost: 1000,
+		TLSClientConfig:     tlsConf,
 	}
-	rt = &cortexTenantRoundTripper{tenant: config.Tenant, rt: rt}
+	rt = &cortexTenantRoundTripper{bearer: config.HttpBearerToken, tenant: config.Tenant, rt: rt}
 	httpClient := &http.Client{Transport: otelhttp.NewTransport(rt)}
 
 	c := Client{
@@ -131,10 +136,12 @@ func SendRemoteWrite(config ConfigWrite) error {
 func (rt *cortexTenantRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	req = cloneRequest(req)
 	req.Header.Set("X-Scope-OrgID", rt.tenant)
+	req.Header.Set("Authorization", "Bearer " + rt.bearer)
 	return rt.rt.RoundTrip(req)
 }
 
 type cortexTenantRoundTripper struct {
+    bearer string
 	tenant string
 	rt     http.RoundTripper
 }
@@ -326,7 +333,6 @@ func (c *Client) Store(ctx context.Context, req *prompb.WriteRequest) error {
 	defer span.End()
 
 	ctx = httptrace.WithClientTrace(ctx, otelhttptrace.NewClientTrace(ctx))
-
 
 	httpReq, err := http.NewRequestWithContext(ctx, "POST", c.config.URL.String(), bytes.NewReader(compressed))
 	if err != nil {

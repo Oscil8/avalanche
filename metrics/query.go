@@ -1,6 +1,7 @@
 package metrics
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -106,8 +107,9 @@ func init() {
 // Make size queries after every RequestInterval RequestCount times.
 func Query(config ConfigRead) {
 	// N*M means M queries with N cardinality
-	var rt http.RoundTripper = &http.Transport{}
-	rt = &cortexTenantRoundTripper{tenant: config.Tenant, rt: rt}
+	tlsConf := &tls.Config{InsecureSkipVerify: true}
+	var rt http.RoundTripper = &http.Transport{TLSClientConfig: tlsConf}
+	rt = &cortexTenantRoundTripper{bearer: config.HttpBearerToken, tenant: config.Tenant, rt: rt}
 	httpClient := &http.Client{Transport: rt}
 	c := ReadClient{
 		client:  httpClient,

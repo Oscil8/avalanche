@@ -4,16 +4,12 @@ import (
 	"bufio"
 	"bytes"
 	"context"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"github.com/gogo/protobuf/proto"
-	"log"
-	"github.com/golang/snappy"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promauto"
-	"github.com/prometheus/prometheus/prompb"
 	"io"
 	"io/ioutil"
+	"log"
 	"math/rand"
 	"net/http"
 	"net/url"
@@ -21,6 +17,12 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/gogo/protobuf/proto"
+	"github.com/golang/snappy"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
+	"github.com/prometheus/prometheus/prompb"
 )
 
 type PipelineProbeConfig struct {
@@ -169,7 +171,7 @@ func createPayload(promseries []prompb.TimeSeries) ([]byte, error) {
 	return compressed, nil
 }
 
-func createWriteRequest(ctx context.Context, url string, payload []byte) (*http.Request, error) {
+func createWriteRequest(ctx context.Context, url string, payload []byte, token string) (*http.Request, error) {
 	req, err := http.NewRequestWithContext(
 		ctx,
 		"POST",
@@ -183,6 +185,7 @@ func createWriteRequest(ctx context.Context, url string, payload []byte) (*http.
 	req.Header.Add("X-Prometheus-Remote-Write-Version", "0.1.0")
 	req.Header.Add("Content-Encoding", "snappy")
 	req.Header.Set("Content-Type", "application/x-protobuf")
+	req.Header.Set("Authorization", "Bearer "+token)
 
 	if err != nil {
 		return nil, err
@@ -193,8 +196,12 @@ func createWriteRequest(ctx context.Context, url string, payload []byte) (*http.
 
 func remote_write(req *http.Request) error {
 
+	tlsConf := &tls.Config{InsecureSkipVerify: true}
+	var rt http.RoundTripper = &http.Transport{TLSClientConfig: tlsConf}
+
 	var httpClient = &http.Client{
-		Timeout: time.Second * 30,
+		Timeout:   time.Second * 30,
+		Transport: rt,
 	}
 	resp, err := httpClient.Do(req)
 	if err != nil {
@@ -228,7 +235,7 @@ func publish(ctx context.Context, PipelineProbeMetrics []string, config Pipeline
 	promseries := convert_to_prom(PipelineProbeMetrics)
 	payload, _ := createPayload(promseries)
 	write_url := config.WriteUrl.String()
-	req, _ := createWriteRequest(ctx, write_url, payload)
+	req, _ := createWriteRequest(ctx, write_url, payload, config.HttpBearerToken)
 	return remote_write(req)
 
 }
@@ -302,8 +309,15 @@ func pipelineProbeDo(ctx context.Context, method string, url string, body io.Rea
 	if err != nil {
 		return nil, err
 	}
+	tlsConf := &tls.Config{InsecureSkipVerify: true}
+	var rt http.RoundTripper = &http.Transport{TLSClientConfig: tlsConf}
 
-	resp, err := http.DefaultClient.Do(req)
+	var httpClient = &http.Client{
+		Timeout:   time.Second * 60,
+		Transport: rt,
+	}
+
+	resp, err := httpClient.Do(req)
 	if err != nil {
 		return nil, err
 	}

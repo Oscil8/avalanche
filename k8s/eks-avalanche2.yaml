@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: avalanche-service
+  name: avalanche-service-2
   namespace: store-load-test
   labels:
-    app: avalanche-app
-spec:    
+    app: avalanche-app-2
+spec:
   selector:
-    app: avalanche-app
+    app: avalanche-app-2
   ports:
     - protocol: TCP
       port: 2112
@@ -17,23 +17,23 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: avalanche
+  name: avalanche-2
   namespace: store-load-test
   labels:
-    app: avalanche-app
+    app: avalanche-app-2
 spec:
-  replicas: 8
+  replicas: 32
   selector:
     matchLabels:
-      app: avalanche-app
+      app: avalanche-app-2
   template:
     metadata:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: /stats
-        prometheus.io/port: "2112"     
+        prometheus.io/port: "2112"
       labels:
-        app: avalanche-app
+        app: avalanche-app-2
     spec:
       affinity:
         nodeAffinity:
@@ -51,30 +51,33 @@ spec:
         resources:
           limits:
             cpu: 5
-            memory: 10Gi
+            memory: 15Gi
           requests:
             cpu: 5
-            memory: 10Gi
+            memory: 15Gi
         args:
         - --metric-count=1000
         - --series-count=1000
-        - --port=9001 
-        - --series-interval=36000 
-        - --metric-interval=3600000 
-        - --value-interval=10 
+        - --port=9001
+        - --series-interval=36000
+        - --metric-interval=3600000
+        - --value-interval=10
         - --remote-url=https://stefan-beacon-perf-kops-fre-lb-52c5173c29c4d9ca.elb.us-east-1.amazonaws.com/prometheus/remote/write
         - --remote-requests-count=10000000
-        - --remote-write-interval=80000ms
+        - --remote-write-interval=100000ms
+        - --remote-read-url=https://stefan-beacon-perf-kops-fre-lb-52c5173c29c4d9ca.elb.us-east-1.amazonaws.com:443/prometheus
         - --const-label=instance=$(INSTANCE)
-        - --remote-batch-size=5000
-        - --remote-read-batch-size=0
-        - --remote-read-requests-count=0
-        - --remote-read-interval=10s
+        - --remote-batch-size=80
+        - --remote-read-batch-size=100
+        - --remote-read-requests-count=100
+        - --remote-read-interval=32s
         - --http-bearer-token=1da28aff-eb31-47d9-b0c7-5ad4f9e323ae
+        - --record-rule-probe-lookback=2m
+        - --record-rule-max-count=3223
         ports:
         - containerPort: 9001
         - containerPort: 2112
-        env: 
+        env:
           - name: INSTANCE
             valueFrom:
               fieldRef:
@@ -86,7 +89,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   namespace: store-load-test
-  name: ingress-avalanche
+  name: ingress-avalanche-2
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -97,5 +100,5 @@ spec:
         paths:
           - path: /*
             backend:
-              serviceName: avalanche-service
+              serviceName: avalanche-service-2
               servicePort: 2112

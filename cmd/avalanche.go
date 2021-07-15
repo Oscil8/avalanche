@@ -16,13 +16,12 @@ import (
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/trace/jaeger"
 	"go.opentelemetry.io/otel/propagation"
-	sdktrace "go.opentelemetry.io/otel/sdk/trace"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/semconv"
 	"go.opentelemetry.io/otel/sdk/resource"
-
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+	"go.opentelemetry.io/otel/semconv"
 )
 
 var (
@@ -117,11 +116,13 @@ func RecordingProbe() {
 		metrics.RecordRuleProbeLoop(ctx, recordRuleProbeConfig)
 	}()
 }
+
 const (
 	service     = "store-demo"
 	environment = "poc-debug"
 	id          = 1
 )
+
 func initTracer(url string) {
 	// Create stdout exporter to be able to retrieve
 	// the collected spans.
@@ -191,6 +192,7 @@ func main() {
 			RequestCount:    *remoteRequestCount,
 			UpdateNotify:    updateNotify,
 			Tenant:          *remoteTenant,
+			HttpBearerToken:     *httpBearerToken,
 		}
 
 		// Collect Pprof during the write only if not collecting within a regular interval.

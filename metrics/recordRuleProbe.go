@@ -4,13 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promauto"
 	"math/rand"
 	"net/url"
 	"strconv"
 	"sync"
 	"time"
+
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
 )
 
 type RecordRuleProbeConfig struct {
@@ -126,7 +127,7 @@ func RecordRuleQueryAndRecord(ctx context.Context, metric string, config RecordR
 	params := url.Values{}
 
 	query := metric + "{}[" + strconv.Itoa(int(look_back)) + "m]"
-	// fmt.Printf("query: %v\n", query)
+	fmt.Printf("query: %v\n", query)
 	Url.Path = Url.Path + "/api/v1/query"
 	params.Set("query", query)
 	Url.RawQuery = params.Encode()
@@ -139,7 +140,7 @@ func RecordRuleQueryAndRecord(ctx context.Context, metric string, config RecordR
 
 	var response QueryResponse
 
-	// fmt.Printf("response: %+v\n", response)
+	fmt.Printf("response: %+v\n", response)
 
 	if err := json.Unmarshal(resp, &response); err != nil {
 		return err
@@ -157,7 +158,7 @@ func RecordRuleQueryAndRecord(ctx context.Context, metric string, config RecordR
 		lastSeenTimeStamp, _ := values[len(values)-1][0].(float64)
 		now := (float64(time.Now().UnixNano()) / float64(time.Millisecond)) / (1000.0)
 		latency = float64(now - lastSeenTimeStamp)
-		// fmt.Printf("lastSeen %v, now %v, latency %v\n", lastSeenTimeStamp, now, latency)
+		fmt.Printf("lastSeen %v, now %v, latency %v\n", lastSeenTimeStamp, now, latency)
 
 	}
 
