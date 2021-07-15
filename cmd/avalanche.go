@@ -51,6 +51,8 @@ var (
 	recordRuleMaxCount      = kingpin.Flag("record-rule-max-count", "maximum number of rules in the system to be probed.").Default("3000").Int()
 	httpBearerToken         = kingpin.Flag("http-bearer-token", "Http Bearer token to be sent for secure remote requests").Default(" ").String()
 	jaegerURL               = kingpin.Flag("jaeger-url", "URL to send traces to jaeger http(14628) trace API.").String()
+	writeConnLimit          = kingpin.Flag("write-conn-limit", "max number of connections to open (0 for unlimited)").Default("0").Int()
+	writeConnIdleLimit      = kingpin.Flag("write-conn-idle-limit", "max number of connections to open (0 for unlimited)").Default("1000").Int()
 )
 
 func Serve() {
@@ -192,7 +194,9 @@ func main() {
 			RequestCount:    *remoteRequestCount,
 			UpdateNotify:    updateNotify,
 			Tenant:          *remoteTenant,
-			HttpBearerToken:     *httpBearerToken,
+			HttpBearerToken: *httpBearerToken,
+			ConnLimit:       *writeConnLimit,
+			ConnIdleLimit:   *writeConnIdleLimit,
 		}
 
 		// Collect Pprof during the write only if not collecting within a regular interval.

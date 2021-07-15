@@ -98,10 +98,12 @@ type ConfigWrite struct {
 	RequestInterval time.Duration
 	BatchSize,
 	RequestCount int
-	UpdateNotify chan struct{}
-	PprofURLs    []*url.URL
-	Tenant       string
-	HttpBearerToken  string
+	UpdateNotify    chan struct{}
+	PprofURLs       []*url.URL
+	Tenant          string
+	HttpBearerToken string
+	ConnLimit,
+	ConnIdleLimit int
 }
 
 // Client for the remote write requests.
@@ -117,8 +119,9 @@ func SendRemoteWrite(config ConfigWrite) error {
 	tlsConf := &tls.Config{InsecureSkipVerify: true}
 
 	var rt http.RoundTripper = &http.Transport{
-		MaxIdleConns:        1000,
-		MaxIdleConnsPerHost: 1000,
+		MaxIdleConns:        config.ConnIdleLimit,
+		MaxIdleConnsPerHost: config.ConnIdleLimit,
+		MaxConnsPerHost:     config.ConnLimit,
 		TLSClientConfig:     tlsConf,
 	}
 	rt = &cortexTenantRoundTripper{bearer: config.HttpBearerToken, tenant: config.Tenant, rt: rt}
@@ -136,12 +139,12 @@ func SendRemoteWrite(config ConfigWrite) error {
 func (rt *cortexTenantRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	req = cloneRequest(req)
 	req.Header.Set("X-Scope-OrgID", rt.tenant)
-	req.Header.Set("Authorization", "Bearer " + rt.bearer)
+	req.Header.Set("Authorization", "Bearer "+rt.bearer)
 	return rt.rt.RoundTrip(req)
 }
 
 type cortexTenantRoundTripper struct {
-    bearer string
+	bearer string
 	tenant string
 	rt     http.RoundTripper
 }
