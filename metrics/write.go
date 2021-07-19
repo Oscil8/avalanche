@@ -103,7 +103,8 @@ type ConfigWrite struct {
 	Tenant          string
 	HttpBearerToken string
 	ConnLimit,
-	ConnIdleLimit int
+	ConnIdleLimit,
+	MaxConcurrency int
 }
 
 // Client for the remote write requests.
@@ -180,6 +181,10 @@ func (c *Client) write() error {
 		merr            = &errors.MultiError{}
 	)
 
+	// a blocking channel to keep concurrency under control
+	semaphoreChan := make(chan struct{}, c.config.MaxConcurrency)
+	defer close(semaphoreChan)
+
 	log.Printf("Sending:  %v timeseries, %v samples, %v timeseries per request, %v delay between requests\n", len(tss), c.config.RequestCount, c.config.BatchSize, c.config.RequestInterval)
 	ticker := time.NewTicker(c.config.RequestInterval)
 	defer ticker.Stop()
@@ -205,9 +210,15 @@ func (c *Client) write() error {
 			tss = updateTimetamps(tss)
 		}
 
-		start := time.Now()
+		startBatch := time.Now()
 		for i := 0; i < len(tss); i += c.config.BatchSize {
 			wgMetrics.Add(1)
+
+			if c.config.MaxConcurrency > 0 {
+				// block until the semaphore channel has room
+				semaphoreChan <- struct{}{}
+			}
+
 			go func(i int) {
 				defer wgMetrics.Done()
 				end := i + c.config.BatchSize
@@ -223,7 +234,6 @@ func (c *Client) write() error {
 					us := v * 1000
 					writeLatency.Observe(us)
 				}))
-				defer timer.ObserveDuration()
 
 				err := c.Store(context.TODO(), req)
 				if err != nil {
@@ -231,16 +241,23 @@ func (c *Client) write() error {
 					merr.Add(err)
 					return
 				}
+
+				timer.ObserveDuration()
 				writeLatencyTime.Observe(time.Since(start).Seconds())
+
 				mtx.Lock()
 				totalSamplesAct += len(tss[i:end])
 				samplesTotal.Add(float64(len(tss[i:end])))
 				mtx.Unlock()
 
+				if c.config.MaxConcurrency > 0 {
+					// clear a spot in the semaphore channel
+					<-semaphoreChan
+				}
 			}(i)
 		}
 		wgMetrics.Wait()
-		totalTime += time.Since(start)
+		totalTime += time.Since(startBatch)
 		if merr.Count() > 20 {
 			merr.Add(fmt.Errorf("too many errors"))
 		}

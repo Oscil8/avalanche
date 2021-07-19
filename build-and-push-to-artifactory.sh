@@ -10,5 +10,5 @@ make
 docker login -u="$ARTIFACTORY_USERNAME" -p="$ARTIFACTORY_PASSWORD" docker.internal.sysdig.com
 IMAGE_ID=$(docker images | grep ^quay.io/freshtracks.io/avalanche | tr -s " " | cut -d " " -f3 )
 echo found $IMAGE_ID
-docker tag ${IMAGE_ID} docker.internal.sysdig.com/avalanche:goldman-beacon-10
-docker push docker.internal.sysdig.com/avalanche:goldman-beacon-10
+docker tag ${IMAGE_ID} docker.internal.sysdig.com/avalanche:goldman-beacon-11
+docker push docker.internal.sysdig.com/avalanche:goldman-beacon-11
