@@ -220,7 +220,14 @@ func (c *Client) write() error {
 			}
 
 			go func(i int) {
+				defer func() {
+					if c.config.MaxConcurrency > 0 {
+						// clear a spot in the semaphore channel
+						<-semaphoreChan
+					}
+				}()
 				defer wgMetrics.Done()
+
 				end := i + c.config.BatchSize
 				if end > len(tss) {
 					end = len(tss)
@@ -249,11 +256,6 @@ func (c *Client) write() error {
 				totalSamplesAct += len(tss[i:end])
 				samplesTotal.Add(float64(len(tss[i:end])))
 				mtx.Unlock()
-
-				if c.config.MaxConcurrency > 0 {
-					// clear a spot in the semaphore channel
-					<-semaphoreChan
-				}
 			}(i)
 		}
 		wgMetrics.Wait()

@@ -47,7 +47,7 @@ spec:
                 - arm64
       containers:
       - name: avalanche-app
-        image: docker.internal.sysdig.com/avalanche:goldman-beacon-6
+        image: docker.internal.sysdig.com/avalanche:goldman-beacon-10
         resources:
           limits:
             cpu: 5

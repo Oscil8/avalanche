@@ -47,7 +47,7 @@ spec:
                 - arm64
       containers:
       - name: avalanche-app
-        image: docker.internal.sysdig.com/avalanche:goldman-beacon-6
+        image: docker.internal.sysdig.com/avalanche:goldman-beacon-12
         resources:
           limits:
             cpu: 5
@@ -65,6 +65,7 @@ spec:
         - --remote-url=https://stefan-beacon-perf-kops-fre-lb-52c5173c29c4d9ca.elb.us-east-1.amazonaws.com/prometheus/remote/write
         - --remote-requests-count=10000000
         - --remote-write-interval=100000ms
+        - --write-max-concurrency=800
         - --remote-read-url=https://stefan-beacon-perf-kops-fre-lb-52c5173c29c4d9ca.elb.us-east-1.amazonaws.com:443/prometheus
         - --const-label=instance=$(INSTANCE)
         - --remote-batch-size=80
